@@ -19,3 +19,6 @@ Backend:
 - Express
 - SQLite
 - Sequelize (ORM)
+- dotenv
+- cors
+- nodemon

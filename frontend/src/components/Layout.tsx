@@ -1,5 +1,7 @@
-import { Button } from "../components/ui/button";
 import { ReactNode, useState, useEffect } from "react";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
+import { IconSunHigh, IconMoonStars } from "@tabler/icons-react";
 
 const initialiseTheme = () => {
   try {
@@ -37,12 +39,20 @@ export const Layout = ({ children }: { children: ReactNode }) => {
       <div className="max-w-[1280px] p-4 w-full">
         <header className="flex flex-row justify-between items-center w-full">
           <h1 className="text-3xl underline text-ltext-purple dark:text-dheadline-white">
-            React App
+            Museum Curator
           </h1>
-          <p className="text-2xl underline text-ltext-purple dark:text-dheadline-white">
-            React App with TypeScript
-          </p>
-          <Button onClick={toggleTheme}>Click me</Button>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="darkmodetoggle"
+              checked={darkMode}
+              onCheckedChange={toggleTheme}
+            />
+            {darkMode ? (
+              <IconSunHigh height={35} width={35} />
+            ) : (
+              <IconMoonStars height={35} width={35} />
+            )}
+          </div>
         </header>
 
         <main>{children}</main>

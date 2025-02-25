@@ -11,12 +11,12 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-export const getHarvardArt = async () => {
+export const getHarvardArt = async (page: number) => {
   try {
     return await apiClient.get("/object", {
       params: {
         size: 15,
-        page: 1,
+        page: page,
       },
     });
   } catch (error) {

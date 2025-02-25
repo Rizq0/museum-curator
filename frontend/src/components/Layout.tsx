@@ -1,6 +1,5 @@
 import { ReactNode, useState, useEffect } from "react";
 import { Switch } from "./ui/switch";
-import { Label } from "./ui/label";
 import { IconSunHigh, IconMoonStars } from "@tabler/icons-react";
 
 const initialiseTheme = () => {
@@ -47,7 +46,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               checked={darkMode}
               onCheckedChange={toggleTheme}
             />
-            {darkMode ? (
+            {!darkMode ? (
               <IconSunHigh height={35} width={35} />
             ) : (
               <IconMoonStars height={35} width={35} />

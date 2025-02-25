@@ -12,10 +12,14 @@ apiClient.interceptors.request.use((config) => {
 });
 
 export const getHarvardArt = async () => {
-  return await apiClient.get("/object", {
-    params: {
-      size: 15,
-      page: 1,
-    },
-  });
+  try {
+    return await apiClient.get("/object", {
+      params: {
+        size: 15,
+        page: 1,
+      },
+    });
+  } catch (error) {
+    throw new Error("Error fetching Harvard Art");
+  }
 };

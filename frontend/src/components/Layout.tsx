@@ -41,8 +41,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="bg-lbg-purple dark:bg-dbg-purple min-h-screen min-w-[365px] flex flex-col items-center">
-      <div className="max-w-[1280px] p-4 w-full">
-        <header className="flex flex-row justify-between items-center w-full">
+      <div className="max-w-[1280px] p-4 w-full flex flex-col min-h-screen">
+        <header className="flex flex-row justify-between items-center w-full py-4">
           <div
             className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
             aria-label="Home"
@@ -73,9 +73,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           </div>
         </header>
 
-        <main>{children}</main>
+        <main className="flex-grow">{children}</main>
 
-        <footer>FOOTER</footer>
+        <footer className="w-full text-center py-4">FOOTER</footer>
       </div>
     </div>
   );

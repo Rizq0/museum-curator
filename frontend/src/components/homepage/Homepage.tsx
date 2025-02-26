@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Button } from "../../components/ui/button";
 import { getHarvardArt } from "../../api-calls/harvardart/harvardart-calls";
 import { getClevelandArt } from "../../api-calls/clevelandart/clevelandart-calls";
+import { PageControls } from "../utility/PageControls";
 
 export const Homepage = () => {
   let { page, gallery } = useParams();
@@ -44,11 +44,19 @@ export const Homepage = () => {
   };
 
   return (
-    <div>
-      {(harvardLoad || clevelandLoad) && <h1>Loading...</h1>}
-      {(harvardError || clevelandError) && <h1>Error fetching Artwork</h1>}
+    <div className="flex flex-col items-center mt-4">
+      <PageControls
+        previous={handlePreviousPage}
+        next={handleNextPage}
+        setCurrentGallery={setCurrentGallery}
+        currentPage={currentPage}
+      />
+      {(harvardLoad || clevelandLoad) && <h1 className="mt-4">Loading...</h1>}
+      {(harvardError || clevelandError) && (
+        <h1 className="mt-4">Error fetching Artwork</h1>
+      )}
       {gallery === "harvard" && harvardAll && (
-        <div>
+        <div className="mt-4">
           <ul>
             {harvardAll.data.records.map((art: any) => (
               <li key={art.id}>
@@ -72,12 +80,6 @@ export const Homepage = () => {
           </ul>
         </div>
       )}
-      <div>
-        <Button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          Previous Page
-        </Button>
-        <Button onClick={handleNextPage}>Next Page</Button>
-      </div>
     </div>
   );
 };

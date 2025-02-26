@@ -19,7 +19,7 @@ export const PageControls = ({
         <Popover>
           <PopoverTrigger asChild>
             <Button className="hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer">
-              Change Gallery
+              Change Art Gallery
             </Button>
           </PopoverTrigger>
           <PopoverContent className="bg-dbg-purple dark:bg-dbuttonbg-pink">
@@ -28,13 +28,13 @@ export const PageControls = ({
                 className="text-base text-lbuttonbg-white dark:text-dbuttontext-dark hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:hover:bg-dbg-purple dark:hover:text-dheadline-white cursor-pointer"
                 onClick={() => setCurrentGallery("harvard")}
               >
-                Harvard
+                Harvard Art Museum
               </Label>
               <Label
                 className="text-base text-lbuttonbg-white dark:text-dbuttontext-dark hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:hover:bg-dbg-purple dark:hover:text-dheadline-white cursor-pointer"
                 onClick={() => setCurrentGallery("cleveland")}
               >
-                Cleveland
+                Cleveland Museum of Art
               </Label>
             </div>
           </PopoverContent>

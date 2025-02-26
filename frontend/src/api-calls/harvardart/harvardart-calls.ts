@@ -17,6 +17,8 @@ export const getHarvardArt = async (page: number) => {
       params: {
         size: 15,
         page: page,
+        sort: "id",
+        order: "asc",
       },
     });
   } catch (error) {

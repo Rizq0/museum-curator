@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getHarvardArt } from "../../api-calls/harvardart/harvardart-calls";
 import { getClevelandArt } from "../../api-calls/clevelandart/clevelandart-calls";
 import { PageControls } from "../utility/PageControls";
+import { LoaderIcon } from "lucide-react";
 
 export const Homepage = () => {
   let { page, gallery } = useParams();
@@ -51,7 +52,11 @@ export const Homepage = () => {
         setCurrentGallery={setCurrentGallery}
         currentPage={currentPage}
       />
-      {(harvardLoad || clevelandLoad) && <h1 className="mt-4">Loading...</h1>}
+      {(harvardLoad || clevelandLoad) && (
+        <div className="flex justify-center mt-4">
+          <LoaderIcon className="animate-spin self-center size-8" />
+        </div>
+      )}
       {(harvardError || clevelandError) && (
         <h1 className="mt-4">Error fetching Artwork</h1>
       )}

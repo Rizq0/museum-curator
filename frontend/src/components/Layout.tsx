@@ -43,7 +43,10 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     <div className="bg-lbg-purple dark:bg-dbg-purple min-h-screen min-w-[365px] flex flex-col items-center">
       <div className="max-w-[1280px] p-4 w-full">
         <header className="flex flex-row justify-between items-center w-full">
-          <div className="hover:text-dbuttonbg-pink">
+          <div
+            className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
+            aria-label="Home"
+          >
             <IconHome height={48} width={48} onClick={handleHome} />
           </div>
           <div className="flex items-center space-x-2">
@@ -51,11 +54,21 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               id="darkmodetoggle"
               checked={darkMode}
               onCheckedChange={toggleTheme}
+              className="cursor-pointer"
+              aria-label="Toggle Dark Mode"
             />
             {!darkMode ? (
-              <IconSunHigh height={35} width={35} />
+              <IconSunHigh
+                height={35}
+                width={35}
+                className="text-dbg-purple dark:text-dheadline-white"
+              />
             ) : (
-              <IconMoonStars height={35} width={35} />
+              <IconMoonStars
+                height={35}
+                width={35}
+                className="text-dbg-purple dark:text-dheadline-white"
+              />
             )}
           </div>
         </header>

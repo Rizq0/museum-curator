@@ -45,7 +45,7 @@ export const Homepage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-4">
+    <div className="flex flex-col items-center">
       <PageControls
         previous={handlePreviousPage}
         next={handleNextPage}
@@ -74,7 +74,7 @@ export const Homepage = () => {
       )}
 
       {gallery === "cleveland" && clevelandAll && (
-        <div>
+        <div className="mt-4">
           <ul>
             {clevelandAll.data.data.map((art: any) => (
               <li key={art.id}>

@@ -1,6 +1,3 @@
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Select,
   SelectContent,
@@ -8,12 +5,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+} from "../ui/pagination";
 
 export const PageControls = ({
   previous,
   next,
   setCurrentGallery,
-  currentPage,
 }: {
   previous: () => void;
   next: () => void;
@@ -21,8 +24,8 @@ export const PageControls = ({
   currentPage: number;
 }) => {
   return (
-    <div className="flex flex-row justify-between w-full">
-      <div>
+    <div className="flex flex-row flex-wrap justify-between w-full">
+      <div className="mt-4">
         <Select onValueChange={(value) => setCurrentGallery(value)}>
           <SelectTrigger className="w-[230px] cursor-pointer text-base font-semibold bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark">
             <SelectValue placeholder="Change Art Gallery" />
@@ -37,20 +40,25 @@ export const PageControls = ({
           </SelectContent>
         </Select>
       </div>
-      <div className="space-x-2">
-        <Button
-          onClick={previous}
-          disabled={currentPage === 1}
-          className="hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
-        >
-          Previous
-        </Button>
-        <Button
-          onClick={next}
-          className="hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
-        >
-          Next
-        </Button>
+      <div className="mt-4">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={previous}
+                size="default"
+                className="text-lbuttonbg-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
+              />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                onClick={next}
+                size="default"
+                className="text-lbuttonbg-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );

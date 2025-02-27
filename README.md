@@ -2,7 +2,8 @@
 
 ## Tech Stack
 
-- TypeScript
+- JavaScript (Backend)
+- TypeScript (Frontend)
 
 Frontend:
 
@@ -19,6 +20,8 @@ Backend:
 - Express
 - SQLite
 - Sequelize (ORM)
+- Jest
+- Supertest
 - dotenv
 - cors
 - nodemon

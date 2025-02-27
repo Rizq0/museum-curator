@@ -5,6 +5,7 @@ import { getHarvardArt } from "../../api-calls/harvardart/harvardart-calls";
 import { getClevelandArt } from "../../api-calls/clevelandart/clevelandart-calls";
 import { PageControls } from "../utility/PageControls";
 import { LoaderIcon } from "lucide-react";
+import { ArtworkCard } from "../artwork/ArtworkCard";
 
 export const Homepage = () => {
   let { page, gallery } = useParams();
@@ -44,8 +45,16 @@ export const Homepage = () => {
     setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
   };
 
+  useEffect(() => {
+    console.log("harvard data:", harvardAll?.data.records);
+    console.log("cleveland data:", clevelandAll?.data.data);
+    console.log(harvardAll);
+    console.log(clevelandAll);
+  }, [currentGallery]);
+
   return (
     <div className="flex flex-col items-center">
+      <h1 className="text-3xl">Homepage</h1>
       <PageControls
         previous={handlePreviousPage}
         next={handleNextPage}
@@ -62,12 +71,9 @@ export const Homepage = () => {
       )}
       {gallery === "harvard" && harvardAll && (
         <div className="mt-4">
-          <ul>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {harvardAll.data.records.map((art: any) => (
-              <li key={art.id}>
-                {art.title}
-                {art.id}
-              </li>
+              <ArtworkCard key={art.id} artwork={art} />
             ))}
           </ul>
         </div>
@@ -75,12 +81,9 @@ export const Homepage = () => {
 
       {gallery === "cleveland" && clevelandAll && (
         <div className="mt-4">
-          <ul>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {clevelandAll.data.data.map((art: any) => (
-              <li key={art.id}>
-                {art.title}
-                {art.id}
-              </li>
+              <ArtworkCard key={art.id} artwork={art} />
             ))}
           </ul>
         </div>

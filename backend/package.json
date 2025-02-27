@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon listen.js",
     "test-db": "node database/connection.js",
-    "init-db": "node database/utils/init-db.js"
+    "init-db": "node database/utils/init-db.js",
+    "seed:test": "NODE_ENV=test node database/seed/seed-database.js"
   },
   "keywords": [],
   "author": "",

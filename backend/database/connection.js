@@ -1,9 +1,22 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "./database.sqlite",
-});
+let sequelize;
+if (process.env.NODE_ENV === "production") {
+  sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: "./database-production.sqlite",
+  });
+} else if (process.env.NODE_ENV === "test") {
+  sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: "./database-test.sqlite",
+  });
+} else {
+  sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: "./database-development.sqlite",
+  });
+}
 
 const testConnection = async () => {
   try {

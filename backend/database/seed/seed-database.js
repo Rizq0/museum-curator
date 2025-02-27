@@ -24,17 +24,17 @@ const seedDatabase = async () => {
 
     const favourite = await Favorite.bulkCreate([
       {
-        favourite_list_id: favouriteList[0].id,
+        favourite_list_id: 1,
         artwork_id: 1,
         gallery: "havard",
       },
       {
-        favourite_list_id: favouriteList[0].id,
+        favourite_list_id: 1,
         artwork_id: 2,
         gallery: "cleveland",
       },
       {
-        favourite_list_id: favouriteList[1].id,
+        favourite_list_id: 2,
         artwork_id: 3,
         gallery: "havard",
       },
@@ -44,11 +44,19 @@ const seedDatabase = async () => {
     console.log("Database seeded!");
   } catch (error) {
     console.error("Error seeding database:", error);
-  } finally {
-    sequelize.close();
   }
 };
 
-seedDatabase();
+if (require.main === module) {
+  seedDatabase()
+    .then(() => {
+      console.log("Seed completed successfully");
+      sequelize.close();
+    })
+    .catch((err) => {
+      console.error("Seed failed:", err);
+      sequelize.close();
+    });
+}
 
 module.exports = seedDatabase;

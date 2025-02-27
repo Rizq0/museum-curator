@@ -31,10 +31,10 @@ const Favourite = sequelize.define(
 );
 
 FavoriteList.hasMany(Favourite, {
-  foreignKey: "favorite_list_id",
+  foreignKey: "favourite_list_id",
 });
 Favourite.belongsTo(FavoriteList, {
-  foreignKey: "favorite_list_id",
+  foreignKey: "favourite_list_id",
 });
 
 module.exports = Favourite;

@@ -36,7 +36,7 @@ export const PageControls = ({
   const isNextDisabled = currentPage >= totalPages;
 
   return (
-    <div className="flex flex-row flex-wrap sm:justify-between w-full justify-center">
+    <div className="flex flex-row flex-wrap md:justify-between w-full justify-center">
       <div className="mt-4">
         <Select onValueChange={(value) => setCurrentGallery(value)}>
           <SelectTrigger className="w-[230px] cursor-pointer text-base font-semibold bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0">
@@ -52,8 +52,8 @@ export const PageControls = ({
           </SelectContent>
         </Select>
       </div>
-      <div className="mt-4 ml-2">
-        <Pagination>
+      <div className="mt-4 sm:ml-2">
+        <Pagination className="m-w-[350px]">
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
@@ -65,7 +65,7 @@ export const PageControls = ({
             {currentPage > 2 && (
               <PaginationItem>
                 <PaginationLink
-                  size="default"
+                  size="sm"
                   onClick={() => setCurrentPage(1)}
                   className="cursor-pointer hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark"
                 >
@@ -77,7 +77,7 @@ export const PageControls = ({
             {prevPage && (
               <PaginationItem>
                 <PaginationLink
-                  size="default"
+                  size="sm"
                   onClick={() => setCurrentPage(prevPage)}
                   className="cursor-pointer hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark"
                 >
@@ -87,7 +87,7 @@ export const PageControls = ({
             )}
             <PaginationItem>
               <PaginationLink
-                size="default"
+                size="sm"
                 className="text-lbuttonbg-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
                 onClick={() => setCurrentPage(currentPage)}
               >
@@ -97,7 +97,7 @@ export const PageControls = ({
             {nextPage && (
               <PaginationItem>
                 <PaginationLink
-                  size="default"
+                  size="sm"
                   onClick={() => setCurrentPage(nextPage)}
                   className="cursor-pointer hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark"
                 >
@@ -109,7 +109,7 @@ export const PageControls = ({
             {currentPage < totalPages - 1 && (
               <PaginationItem>
                 <PaginationLink
-                  size="default"
+                  size="sm"
                   onClick={() => setCurrentPage(totalPages)}
                   className="cursor-pointer hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark"
                 >
@@ -120,7 +120,7 @@ export const PageControls = ({
             <PaginationItem>
               <PaginationNext
                 onClick={isNextDisabled ? undefined : next}
-                size="default"
+                size="sm"
                 className="text-lbuttonbg-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
               />
             </PaginationItem>

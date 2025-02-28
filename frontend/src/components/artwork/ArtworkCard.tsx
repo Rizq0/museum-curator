@@ -18,35 +18,33 @@ export const ArtworkCard = ({
   artwork: Artwork;
   currentGallery: string;
 }) => {
+  const getImageUrl = () => {
+    switch (currentGallery) {
+      case "harvard":
+        return artwork.primaryimageurl || NoImage;
+      case "cleveland":
+        return artwork.images?.print?.url || NoImage;
+      default:
+        return NoImage;
+    }
+  };
+
   return (
     <div className="p-4 border-2 max-w-[365px] cursor-pointer">
       <li className="flex flex-col items-center">
-        {currentGallery === "harvard" && (
-          <div className="flex flex-col items-center">
-            <h1 className="text-lg font-bold mt-2 text-center">
-              {artwork.title}
-            </h1>
-            <img
-              className="w-64 h-64 object-cover rounded-lg mt-2"
-              src={artwork.primaryimageurl ? artwork.primaryimageurl : NoImage}
-              alt={artwork.title}
-            />
-          </div>
-        )}
-        {currentGallery === "cleveland" && (
-          <div className="flex flex-col items-center">
-            <h1 className="text-lg font-bold mt-2 text-center">
-              {artwork.title}
-            </h1>
-            <img
-              className="w-64 h-64 object-cover rounded-lg mt-2"
-              src={
-                artwork.images?.print?.url ? artwork.images.print.url : NoImage
-              }
-              alt={artwork.title}
-            />
-          </div>
-        )}
+        <div className="flex flex-col items-center">
+          <h1 className="text-lg font-bold mt-2 text-center line-clamp-2">
+            {artwork.title}
+          </h1>
+          <p className="text-sm mt-1 text-center line-clamp-1">
+            {artwork.artist}
+          </p>
+          <img
+            className="w-64 h-64 object-cover rounded-lg mt-2"
+            src={getImageUrl()}
+            alt={artwork.title}
+          />
+        </div>
       </li>
     </div>
   );

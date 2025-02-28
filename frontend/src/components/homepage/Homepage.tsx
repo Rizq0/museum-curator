@@ -82,7 +82,11 @@ export const Homepage = () => {
         <div className="mt-4">
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {harvardAll.data.records.map((art: any) => (
-              <ArtworkCard key={art.id} artwork={art} />
+              <ArtworkCard
+                key={art.id}
+                artwork={art}
+                currentGallery={currentGallery || ""}
+              />
             ))}
           </ul>
         </div>
@@ -92,7 +96,11 @@ export const Homepage = () => {
         <div className="mt-4">
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {clevelandAll.data.data.map((art: any) => (
-              <ArtworkCard key={art.id} artwork={art} />
+              <ArtworkCard
+                key={art.id}
+                artwork={art}
+                currentGallery={currentGallery || ""}
+              />
             ))}
           </ul>
         </div>

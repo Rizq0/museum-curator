@@ -12,6 +12,7 @@ export const Homepage = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(Number(page));
   const [currentGallery, setCurrentGallery] = useState(gallery);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     navigate(`/homepage/${currentGallery}/${currentPage}`);
@@ -48,9 +49,15 @@ export const Homepage = () => {
   useEffect(() => {
     console.log("harvard data:", harvardAll?.data.records);
     console.log("cleveland data:", clevelandAll?.data.data);
-    console.log(harvardAll);
-    console.log(clevelandAll);
-  }, [currentGallery]);
+    console.log(totalPages);
+
+    if (harvardAll) {
+      setTotalPages(harvardAll.data.info.pages);
+    }
+    if (clevelandAll) {
+      setTotalPages(Math.ceil(clevelandAll.data.info.total / 15));
+    }
+  }, [harvardAll, clevelandAll]);
 
   return (
     <div className="flex flex-col items-center">
@@ -59,6 +66,8 @@ export const Homepage = () => {
         previous={handlePreviousPage}
         next={handleNextPage}
         setCurrentGallery={setCurrentGallery}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
         currentPage={currentPage}
       />
       {(harvardLoad || clevelandLoad) && (

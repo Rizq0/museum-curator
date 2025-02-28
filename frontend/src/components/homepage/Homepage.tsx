@@ -51,13 +51,13 @@ export const Homepage = () => {
     console.log("cleveland data:", clevelandAll?.data.data);
     console.log(totalPages);
 
-    if (harvardAll) {
+    if (gallery === "harvard" && harvardAll) {
       setTotalPages(harvardAll.data.info.pages);
     }
-    if (clevelandAll) {
+    if (gallery === "cleveland" && clevelandAll) {
       setTotalPages(Math.ceil(clevelandAll.data.info.total / 15));
     }
-  }, [harvardAll, clevelandAll]);
+  }, [harvardAll, clevelandAll, gallery]);
 
   return (
     <div className="flex flex-col items-center">

@@ -36,9 +36,6 @@ export const ArtworkCard = ({
           <h1 className="text-lg font-bold mt-2 text-center line-clamp-2">
             {artwork.title}
           </h1>
-          <p className="text-sm mt-1 text-center line-clamp-1">
-            {artwork.artist}
-          </p>
           <img
             className="w-64 h-64 object-cover rounded-lg mt-2"
             src={getImageUrl()}

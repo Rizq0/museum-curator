@@ -12,6 +12,7 @@ import {
   PaginationPrevious,
   PaginationNext,
   PaginationLink,
+  PaginationEllipsis,
 } from "../ui/pagination";
 
 export const PageControls = ({
@@ -61,6 +62,18 @@ export const PageControls = ({
                 className="text-lbuttonbg-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
               />
             </PaginationItem>
+            {currentPage > 2 && (
+              <PaginationItem>
+                <PaginationLink
+                  size="default"
+                  onClick={() => setCurrentPage(1)}
+                  className="cursor-pointer hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark"
+                >
+                  1
+                </PaginationLink>
+              </PaginationItem>
+            )}
+            {currentPage > 2 && <PaginationEllipsis />}
             {prevPage && (
               <PaginationItem>
                 <PaginationLink
@@ -89,6 +102,18 @@ export const PageControls = ({
                   className="cursor-pointer hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark"
                 >
                   {nextPage}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+            {currentPage < totalPages - 1 && <PaginationEllipsis />}
+            {currentPage < totalPages - 1 && (
+              <PaginationItem>
+                <PaginationLink
+                  size="default"
+                  onClick={() => setCurrentPage(totalPages)}
+                  className="cursor-pointer hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark"
+                >
+                  {totalPages}
                 </PaginationLink>
               </PaginationItem>
             )}

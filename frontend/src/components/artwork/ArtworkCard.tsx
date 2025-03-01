@@ -1,4 +1,5 @@
 import NoImage from "../../assets/No-Image-Placeholder.svg";
+import { useNavigate } from "react-router-dom";
 
 interface Artwork {
   primaryimageurl: string;
@@ -18,6 +19,7 @@ export const ArtworkCard = ({
   artwork: Artwork;
   currentGallery: string;
 }) => {
+  const navigate = useNavigate();
   const getImageUrl = () => {
     switch (currentGallery) {
       case "harvard":
@@ -29,8 +31,17 @@ export const ArtworkCard = ({
     }
   };
 
+  const handleClick = (id: string) => {
+    navigate(`/artwork/${currentGallery}/${id}`);
+  };
+
   return (
-    <div className="p-4 border-2 max-w-[365px] cursor-pointer">
+    <div
+      className="p-4 border-2 max-w-[365px] cursor-pointer"
+      onClick={() => {
+        handleClick(artwork.id);
+      }}
+    >
       <li>
         <div className="flex flex-col items-center">
           <h1 className="text-lg font-bold mt-2 text-center line-clamp-2">

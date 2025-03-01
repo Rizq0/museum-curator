@@ -31,15 +31,15 @@ export const ArtworkCard = ({
     }
   };
 
-  const handleClick = (id: string) => {
-    navigate(`/artwork/${currentGallery}/${id}`);
+  const handleClick = () => {
+    navigate(`/artwork/${currentGallery}/${artwork.id}`);
   };
 
   return (
     <div
       className="p-4 border-2 max-w-[365px] cursor-pointer"
       onClick={() => {
-        handleClick(artwork.id);
+        handleClick();
       }}
     >
       <li>

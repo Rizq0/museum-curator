@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../connection");
-const FavoriteList = require("./FavouriteList");
+const FavouriteList = require("./FavouriteList");
 
 const Favourite = sequelize.define(
   "Favourite",
@@ -14,12 +14,13 @@ const Favourite = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: FavoriteList,
+        model: FavouriteList,
         key: "id",
       },
+      onDelete: "CASCADE",
     },
     artwork_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     gallery: {
@@ -30,10 +31,10 @@ const Favourite = sequelize.define(
   { tableName: "favourites", underscored: true }
 );
 
-FavoriteList.hasMany(Favourite, {
+FavouriteList.hasMany(Favourite, {
   foreignKey: "favourite_list_id",
 });
-Favourite.belongsTo(FavoriteList, {
+Favourite.belongsTo(FavouriteList, {
   foreignKey: "favourite_list_id",
 });
 

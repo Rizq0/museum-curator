@@ -5,7 +5,7 @@ require("dotenv").config({
 });
 
 const sequelize = require("../connection");
-const Favorite = require("../models/Favourite");
+const Favourite = require("../models/Favourite");
 const FavouriteList = require("../models/FavouriteList");
 
 const seedDatabase = async () => {
@@ -22,7 +22,7 @@ const seedDatabase = async () => {
     ]);
     console.log(`Favourite List created: ${favouriteList.length}`);
 
-    const favourite = await Favorite.bulkCreate([
+    const favourite = await Favourite.bulkCreate([
       {
         favourite_list_id: 1,
         artwork_id: 1,

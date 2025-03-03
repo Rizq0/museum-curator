@@ -54,7 +54,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               id="darkmodetoggle"
               checked={darkMode}
               onCheckedChange={toggleTheme}
-              className="cursor-pointer"
+              className="cursor-pointer bg-dbg-purple dark:bg-dheadline-white"
               aria-label="Toggle Dark Mode"
             />
             {!darkMode ? (

@@ -52,7 +52,7 @@ export const PageControls = ({
           </SelectContent>
         </Select>
       </div>
-      <div className="mt-4 sm:ml-2">
+      <div className="mt-4 ml-2">
         <Pagination className="m-w-[350px]">
           <PaginationContent>
             <PaginationItem>

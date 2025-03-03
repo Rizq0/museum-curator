@@ -10,7 +10,7 @@ const FavouriteList = require("../models/FavouriteList");
 
 const seedDatabase = async () => {
   console.log("Seeding database...");
-  console.log(`Using database: ${process.env.DATABASE_STORAGE}`);
+  console.log("Using ENV:", ENV);
 
   try {
     await sequelize.sync({ force: true });

@@ -3,12 +3,12 @@ const { app } = require("../api/app");
 const sequelize = require("../database/connection");
 const seedDatabase = require("../database/seed/seed-database");
 
-let isConntected = false;
+let isConnected = false;
 
 beforeAll(async () => {
   try {
     await sequelize.authenticate();
-    isConntected = true;
+    isConnected = true;
     console.log("Connection has been established successfully.");
     await sequelize.sync({ force: true });
     await seedDatabase();
@@ -18,7 +18,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  if (isConntected) {
+  if (isConnected) {
     await sequelize.close();
     console.log("Connection has been closed successfully.");
   }

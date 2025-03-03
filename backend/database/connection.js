@@ -27,6 +27,8 @@ const testConnection = async () => {
   }
 };
 
-testConnection();
+if (require.main === module) {
+  testConnection();
+}
 
 module.exports = sequelize;

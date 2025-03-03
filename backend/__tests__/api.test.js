@@ -2,6 +2,7 @@ const request = require("supertest");
 const { app } = require("../api/app");
 const sequelize = require("../database/connection");
 const seedDatabase = require("../database/seed/seed-database");
+const endpointData = require("../api/endpoints.json");
 
 let isConnected = false;
 
@@ -25,11 +26,30 @@ afterAll(async () => {
 });
 
 describe("API Endpoints", () => {
-  describe("GET /api/test", () => {
-    it("should return status 200", async () => {
-      const response = await request(app).get("/api/test");
+  describe("GET /api", () => {
+    it("200: Fetches all the api endpoints.", async () => {
+      const response = await request(app).get("/api");
+      const body = response.body;
       expect(response.status).toBe(200);
-      expect(response.body.message).toBe("Test route works!");
+      expect(Object.keys(body).length).toEqual(
+        Object.keys(endpointData).length
+      );
+      Object.keys(endpointData).forEach((key) => {
+        expect(body).toHaveProperty(key);
+      });
+    });
+  });
+  describe("GET /api/collections", () => {
+    it("200: Fetches all collections in relation to the current hardcoded user id (1).", async () => {
+      const response = await request(app).get("/api/collections");
+      const body = response.body;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(2);
+      body.forEach((collection) => {
+        expect(collection).toHaveProperty("id");
+        expect(collection).toHaveProperty("name");
+        expect(collection).toHaveProperty("user_id");
+      });
     });
   });
 });

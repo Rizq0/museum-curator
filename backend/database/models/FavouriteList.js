@@ -14,7 +14,7 @@ const FavouriteList = sequelize.define(
       allowNull: false,
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(32),
       allowNull: false,
     },
   },

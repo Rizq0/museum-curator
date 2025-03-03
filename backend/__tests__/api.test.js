@@ -52,4 +52,17 @@ describe("API Endpoints", () => {
       });
     });
   });
+  describe("POST /api/collections", () => {
+    it("201: Posts a new collection.", async () => {
+      const response = await request(app).post("/api/collections").send({
+        name: "New Collection",
+        user_id: 1,
+      });
+      const body = response.body;
+      expect(response.status).toBe(201);
+      expect(body).toHaveProperty("id");
+      expect(body).toHaveProperty("name");
+      expect(body).toHaveProperty("user_id");
+    });
+  });
 });

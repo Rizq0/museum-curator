@@ -9,3 +9,11 @@ exports.fetchAllCollections = async () => {
   });
   return collections;
 };
+
+exports.setACollection = async (name, user_id) => {
+  const post = FavouriteList.create({
+    name,
+    user_id,
+  });
+  return post;
+};

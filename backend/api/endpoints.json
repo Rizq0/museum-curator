@@ -1,5 +1,22 @@
 {
   "GET /api": {
     "description": "Get all available endpoints"
+  },
+  "GET /api/collections": {
+    "description": "Get all collections"
+  },
+  "POST /api/collections": {
+    "description": "Create a new collection",
+    "body": {
+      "name": "string",
+      "user_id": "string"
+    },
+    "response": {
+      "id": "integer",
+      "name": "string",
+      "user_id": "integer",
+      "updatedAt": "string",
+      "createdAt": "string"
+    }
   }
 }

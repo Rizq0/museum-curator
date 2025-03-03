@@ -1,15 +1,17 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const { testRoute, testError } = require("./controllers/test-controllers");
+const apiRouter = require("../api/routers/main-router");
 const { errorHandler } = require("./error-handlers/error-handlers");
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/test", testRoute);
+app.use("/api", apiRouter);
 
-app.get("/api/test-error", testError);
+app.all("/*", (req, res) => {
+  res.status(404).json({ error: "Route Not Found" });
+});
 
 app.use(errorHandler);
 

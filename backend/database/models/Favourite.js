@@ -20,7 +20,7 @@ const Favourite = sequelize.define(
       onDelete: "CASCADE",
     },
     artwork_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     gallery: {

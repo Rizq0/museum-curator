@@ -6,8 +6,6 @@ require("dotenv").config({
 });
 
 const sequelize = require("../connection");
-const Favourite = require("../models/Favourite");
-const FavouriteList = require("../models/FavouriteList");
 
 const seedDatabase = async () => {
   console.log("Seeding database...");
@@ -25,7 +23,7 @@ const seedDatabase = async () => {
     }
   } catch (err) {
     console.error("Seed failed:", err);
-    throw error;
+    throw err;
   }
 };
 

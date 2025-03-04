@@ -11,9 +11,13 @@ exports.fetchAllCollections = async () => {
 };
 
 exports.setACollection = async (name, user_id) => {
-  const post = FavouriteList.create({
-    name,
-    user_id,
-  });
-  return post;
+  try {
+    const post = FavouriteList.create({
+      name,
+      user_id,
+    });
+    return post;
+  } catch (error) {
+    next(error);
+  }
 };

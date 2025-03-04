@@ -14,9 +14,6 @@ exports.getAllCollections = async (req, res, next) => {
 
 exports.postACollection = async (req, res, next) => {
   const { name, user_id } = req.body;
-  if (!name || !user_id) {
-    return res.status(400).json({ message: "Bad request." });
-  }
   try {
     const response = await setACollection(name, user_id);
     res.status(201).json(response);

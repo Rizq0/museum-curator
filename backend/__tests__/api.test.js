@@ -64,5 +64,34 @@ describe("API Endpoints", () => {
       expect(body).toHaveProperty("name");
       expect(body).toHaveProperty("user_id");
     });
+    it("400: Returns a error if name or user_id is missing.", async () => {
+      const response = await request(app).post("/api/collections").send({
+        name: "New Collection",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "FavouriteList.user_id cannot be null", // Sequelize error message specific to this case - FavouriteList.name cannot be null would be the error message if name was missing
+      });
+    });
+    it("400: Returns a error if user_id is incorrect data type.", async () => {
+      const response = await request(app).post("/api/collections").send({
+        name: 12345,
+        user_id: "test",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Validation isInt on user_id failed",
+      });
+    });
+    it("400: Returns a error if name is empty.", async () => {
+      const response = await request(app).post("/api/collections").send({
+        name: "",
+        user_id: 1,
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Validation notEmpty on name failed",
+      });
+    });
   });
 });

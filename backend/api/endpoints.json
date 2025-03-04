@@ -3,7 +3,28 @@
     "description": "Get all available endpoints"
   },
   "GET /api/collections": {
-    "description": "Get all collections"
+    "description": "Get all collections",
+    "query": {
+      "page": "integer",
+      "limit": "Hardcoded to 15",
+      "example": "GET /api/collections?page=1"
+    },
+    "response": {
+      "data": [
+        {
+          "id": "integer",
+          "name": "string",
+          "user_id": "integer",
+          "updatedAt": "string",
+          "createdAt": "string"
+        }
+      ],
+      "pagination": {
+        "total_page": "integer",
+        "current_page": "integer",
+        "total_results": "integer"
+      }
+    }
   },
   "POST /api/collections": {
     "description": "Create a new collection",

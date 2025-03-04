@@ -52,16 +52,48 @@ describe("API Endpoints", () => {
     });
   });
   describe("GET /api/collections", () => {
-    it("200: Fetches all collections in relation to the current hardcoded user id (1).", async () => {
+    it("200: Returns paginated collections in relation to the current hardcoded user id (1), default query is ?page=1 if no query is given.", async () => {
       const response = await request(app).get("/api/collections");
-      const body = response.body;
+      const body = response.body.data;
       expect(response.status).toBe(200);
-      expect(body.length).toBe(2);
+      expect(body.length).toBe(15);
       body.forEach((collection) => {
         expect(collection).toHaveProperty("id");
         expect(collection).toHaveProperty("name");
         expect(collection).toHaveProperty("user_id");
       });
+    });
+    it("200: Returns the correct number of collections for the first page (15).", async () => {
+      const response = await request(app).get("/api/collections?page=1");
+      const body = response.body.pagination;
+      expect(response.status).toBe(200);
+      expect(body).toHaveProperty("total_pages");
+      expect(body).toHaveProperty("current_page");
+      expect(body).toHaveProperty("total_results");
+    });
+    it("200: Returns the correct number of collections for second page (5).", async () => {
+      const response = await request(app).get("/api/collections?page=2");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(5);
+    });
+    it("200: Returns the correct number of collections for third page (0).", async () => {
+      const response = await request(app).get("/api/collections?page=3");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(0);
+    });
+    it("200: Returns the correct number of collections for first page (15) when query is invalid.", async () => {
+      const response = await request(app).get("/api/collections?page=invalid");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(15);
+    });
+    it("200: Returns the correct number of collections for first page (15) when page is incorrectly spelt.", async () => {
+      const response = await request(app).get("/api/collections?pag=1");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(15);
     });
   });
   describe("POST /api/collections", () => {
@@ -102,18 +134,19 @@ describe("API Endpoints", () => {
       });
       expect(response.status).toBe(400);
       expect(response.body).toEqual({
-        message: "Validation notEmpty on name failed",
+        message:
+          "Validation notEmpty on name failed, Validation len on name failed",
       });
     });
-  });
-  it("400: Returns a error if name is too long.", async () => {
-    const response = await request(app).post("/api/collections").send({
-      name: "This title is very long, so I want to test how long is can really get",
-      user_id: 1,
-    });
-    expect(response.status).toBe(400);
-    expect(response.body).toEqual({
-      message: "Validation len on name failed",
+    it("400: Returns a error if name is too long.", async () => {
+      const response = await request(app).post("/api/collections").send({
+        name: "This title is very long, so I want to test how long is can really get",
+        user_id: 1,
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Validation len on name failed",
+      });
     });
   });
 });

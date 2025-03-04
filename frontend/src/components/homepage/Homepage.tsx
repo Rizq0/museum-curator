@@ -62,14 +62,18 @@ export const Homepage = () => {
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-3xl">Homepage</h1>
-      <PageControls
-        previous={handlePreviousPage}
-        next={handleNextPage}
-        setCurrentGallery={setCurrentGallery}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-        currentPage={currentPage}
-      />
+      {((gallery === "harvard" && !harvardLoad) ||
+        (gallery === "cleveland" && !clevelandLoad)) && (
+        <PageControls
+          previous={handlePreviousPage}
+          next={handleNextPage}
+          setCurrentGallery={setCurrentGallery}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          currentGallery={currentGallery || ""}
+        />
+      )}
       {(harvardLoad || clevelandLoad) && (
         <div className="flex justify-center mt-4">
           <LoaderIcon className="animate-spin self-center size-8" />
@@ -104,6 +108,18 @@ export const Homepage = () => {
             ))}
           </ul>
         </div>
+      )}
+      {((gallery === "harvard" && !harvardLoad) ||
+        (gallery === "cleveland" && !clevelandLoad)) && (
+        <PageControls
+          previous={handlePreviousPage}
+          next={handleNextPage}
+          setCurrentGallery={setCurrentGallery}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          currentGallery={currentGallery || ""}
+        />
       )}
     </div>
   );

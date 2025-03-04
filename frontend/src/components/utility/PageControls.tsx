@@ -22,6 +22,7 @@ export const PageControls = ({
   setCurrentPage,
   totalPages,
   currentPage,
+  currentGallery,
 }: {
   previous: () => void;
   next: () => void;
@@ -29,6 +30,7 @@ export const PageControls = ({
   setCurrentPage: (page: number) => void;
   totalPages: number;
   currentPage: number;
+  currentGallery: string;
 }) => {
   const prevPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
@@ -40,7 +42,15 @@ export const PageControls = ({
       <div className="mt-4">
         <Select onValueChange={(value) => setCurrentGallery(value)}>
           <SelectTrigger className="w-[230px] cursor-pointer text-base font-semibold bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0">
-            <SelectValue placeholder="Change Art Gallery" />
+            <SelectValue
+              placeholder={
+                currentGallery === "harvard"
+                  ? "Harvard Art Museum"
+                  : currentGallery === "cleveland"
+                  ? "Cleveland Museum of Art"
+                  : currentGallery
+              }
+            />
           </SelectTrigger>
           <SelectContent className="bg-dbg-purple text-dheadline-white dark:bg-dbuttonbg-pink dark:text-dbuttontext-dark">
             <SelectItem value="harvard" className="text-base font-semibold">
@@ -52,13 +62,13 @@ export const PageControls = ({
           </SelectContent>
         </Select>
       </div>
-      <div className="mt-4 ml-2">
+      <div className="mt-4">
         <Pagination className="m-w-[350px]">
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
                 onClick={isPrevDisabled ? undefined : previous}
-                size="default"
+                size="sm"
                 className="text-lbuttonbg-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
               />
             </PaginationItem>

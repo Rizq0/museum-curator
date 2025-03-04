@@ -26,6 +26,18 @@ afterAll(async () => {
 });
 
 describe("API Endpoints", () => {
+  describe("Error handling", () => {
+    it("404: Returns a error if endpoint is not found.", async () => {
+      const response = await request(app).get("/api/invalid");
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ error: "Route Not Found" });
+    });
+    it("404: Returns a error if given an empty path.", async () => {
+      const response = await request(app).get("");
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ error: "Route Not Found" });
+    });
+  });
   describe("GET /api", () => {
     it("200: Fetches all the api endpoints.", async () => {
       const response = await request(app).get("/api");

@@ -106,4 +106,14 @@ describe("API Endpoints", () => {
       });
     });
   });
+  it("400: Returns a error if name is too long.", async () => {
+    const response = await request(app).post("/api/collections").send({
+      name: "This title is very long, so I want to test how long is can really get",
+      user_id: 1,
+    });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message: "Validation len on name failed",
+    });
+  });
 });

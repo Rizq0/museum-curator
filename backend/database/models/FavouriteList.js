@@ -22,6 +22,7 @@ const FavouriteList = sequelize.define(
       allowNull: false,
       validate: {
         notEmpty: true,
+        len: [1, 32],
       },
     },
   },

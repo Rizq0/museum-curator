@@ -27,12 +27,12 @@ afterAll(async () => {
 
 describe("API Endpoints", () => {
   describe("Error handling", () => {
-    it("404: Returns a error if endpoint is not found.", async () => {
+    it("404: Returns an error if endpoint is not found.", async () => {
       const response = await request(app).get("/api/invalid");
       expect(response.status).toBe(404);
       expect(response.body).toEqual({ error: "Route Not Found" });
     });
-    it("404: Returns a error if given an empty path.", async () => {
+    it("404: Returns an error if given an empty path.", async () => {
       const response = await request(app).get("");
       expect(response.status).toBe(404);
       expect(response.body).toEqual({ error: "Route Not Found" });
@@ -114,7 +114,8 @@ describe("API Endpoints", () => {
       });
       expect(response.status).toBe(400);
       expect(response.body).toEqual({
-        message: "FavouriteList.user_id cannot be null", // Sequelize error message specific to this case - FavouriteList.name cannot be null would be the error message if name was missing
+        // Sequelize error message specific to this case - FavouriteList.name cannot be null would be the error message if name was missing
+        message: "FavouriteList.user_id cannot be null",
       });
     });
     it("400: Returns a error if user_id is incorrect data type.", async () => {
@@ -140,7 +141,7 @@ describe("API Endpoints", () => {
     });
     it("400: Returns a error if name is too long.", async () => {
       const response = await request(app).post("/api/collections").send({
-        name: "This title is very long, so I want to test how long is can really get",
+        name: "This title is very long, so I want to test how long it can really get",
         user_id: 1,
       });
       expect(response.status).toBe(400);

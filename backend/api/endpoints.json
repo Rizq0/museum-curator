@@ -13,8 +13,8 @@
       "data": [
         {
           "id": "integer",
-          "name": "string",
           "user_id": "integer",
+          "name": "string",
           "updatedAt": "string",
           "createdAt": "string"
         }
@@ -34,10 +34,37 @@
     },
     "response": {
       "id": "integer",
-      "name": "string",
       "user_id": "integer",
+      "name": "string",
       "updatedAt": "string",
       "createdAt": "string"
     }
+  },
+  "GET /api/collections/:id": {
+    "description": "Get a collection by id",
+    "response": {
+      "id": "integer",
+      "user_id": "integer",
+      "name": "string",
+      "updatedAt": "string",
+      "createdAt": "string"
+    }
+  },
+  "PUT /api/collections/:id": {
+    "description": "Update a collection by id",
+    "body": {
+      "name": "string"
+    },
+    "response": {
+      "id": "integer",
+      "user_id": "integer",
+      "name": "string",
+      "updatedAt": "string",
+      "createdAt": "string"
+    }
+  },
+  "DELETE /api/collections/:id": {
+    "description": "Delete a collection by id",
+    "response": {}
   }
 }

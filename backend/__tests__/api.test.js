@@ -150,4 +150,84 @@ describe("API Endpoints", () => {
       });
     });
   });
+  describe("GET /api/collections/:id", () => {
+    it("200: Returns a collection by id.", async () => {
+      const response = await request(app).get("/api/collections/1");
+      const body = response.body;
+      expect(response.status).toBe(200);
+      expect(body).toHaveProperty("id");
+      expect(body).toHaveProperty("name");
+      expect(body).toHaveProperty("user_id");
+    });
+    it("404: Returns an error if collection id does not exist.", async () => {
+      const response = await request(app).get("/api/collections/100");
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Collection not found" });
+    });
+    it("400: Returns an error if collection id is not a number.", async () => {
+      const response = await request(app).get("/api/collections/invalid");
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+  });
+  describe("PUT /api/collections/:id", () => {
+    it("200: Updates a collection by id", async () => {
+      const response = await request(app).put("/api/collections/1").send({
+        name: "Updated Collection Name",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("id", 1);
+      expect(response.body).toHaveProperty("name", "Updated Collection Name");
+    });
+    it("404: Returns an error if collection id does not exist", async () => {
+      const response = await request(app).put("/api/collections/100").send({
+        name: "Updated Collection Name",
+      });
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Collection not found" });
+    });
+    it("400: Returns an error if name is invalid", async () => {
+      const response = await request(app).put("/api/collections/1").send({
+        name: "",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message:
+          "Validation notEmpty on name failed, Validation len on name failed",
+      });
+    });
+    it("400: Returns an error if collection id is not a number", async () => {
+      const response = await request(app).put("/api/collections/invalid").send({
+        name: "Updated Collection Name",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+    it("400: Returns an error if name is too long", async () => {
+      const response = await request(app).put("/api/collections/1").send({
+        name: "This title is very long, so I want to test how long it can really get",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Validation len on name failed",
+      });
+    });
+  });
+  describe("DELETE /api/collections/:id", () => {
+    it("204: Deletes a collection by id", async () => {
+      const response = await request(app).delete("/api/collections/1");
+      expect(response.status).toBe(204);
+      expect(response.body).toEqual({});
+    });
+    it("404: Returns an error if collection id does not exist", async () => {
+      const response = await request(app).delete("/api/collections/100");
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Collection not found" });
+    });
+    it("400: Returns an error if collection id is not a number", async () => {
+      const response = await request(app).delete("/api/collections/invalid");
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+  });
 });

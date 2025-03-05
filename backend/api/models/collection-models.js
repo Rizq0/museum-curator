@@ -31,3 +31,12 @@ exports.setACollection = async (name, user_id) => {
     next(error);
   }
 };
+
+exports.fetchACollection = async (id) => {
+  try {
+    const collection = await FavouriteList.findByPk(id);
+    return collection;
+  } catch (error) {
+    next(error);
+  }
+};

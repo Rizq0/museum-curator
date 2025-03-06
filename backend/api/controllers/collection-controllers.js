@@ -1,4 +1,3 @@
-const { parse } = require("dotenv");
 const {
   fetchAllCollections,
   setACollection,

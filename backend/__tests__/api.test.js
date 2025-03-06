@@ -6,7 +6,7 @@ const endpointData = require("../api/endpoints.json");
 
 let isConnected = false;
 
-beforeAll(async () => {
+beforeEach(async () => {
   try {
     await sequelize.authenticate();
     isConnected = true;
@@ -228,6 +228,54 @@ describe("API Endpoints", () => {
       const response = await request(app).delete("/api/collections/invalid");
       expect(response.status).toBe(400);
       expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+  });
+  describe("GET /api/artworks", () => {
+    it("200: Returns paginated artworks in relation to the current hardcoded user id (1), default query is ?page=1 if no query is given.", async () => {
+      const response = await request(app).get("/api/artworks");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(15);
+      body.forEach((artwork) => {
+        expect(artwork).toHaveProperty("id");
+        expect(artwork).toHaveProperty("favourite_list_id");
+        expect(artwork).toHaveProperty("artwork_id");
+        expect(artwork).toHaveProperty("gallery");
+      });
+    });
+    it("200: Returns the correct number of artworks for the first page (15).", async () => {
+      const response = await request(app).get("/api/artworks?page=1");
+      const body = response.body.pagination;
+      const data = response.body.data;
+      expect(response.status).toBe(200);
+      expect(data).toHaveLength(15);
+      expect(body).toHaveProperty("total_pages");
+      expect(body).toHaveProperty("current_page");
+      expect(body).toHaveProperty("total_results");
+    });
+    it("200: Returns the correct number of artworks for second page (5).", async () => {
+      const response = await request(app).get("/api/artworks?page=2");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(5);
+    });
+    it("200: Returns the correct number of artworks for third page (0).", async () => {
+      const response = await request(app).get("/api/artworks?page=3");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(0);
+    });
+    it("200: Returns the correct number of artworks for first page (15) when query is invalid.", async () => {
+      const response = await request(app).get("/api/artworks?page=invalid");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(15);
+    });
+    it("200: Returns the correct number of artworks for first page (15) when page is incorrectly spelt.", async () => {
+      const response = await request(app).get("/api/artworks?pag=1");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(15);
     });
   });
 });

@@ -66,5 +66,28 @@
   "DELETE /api/collections/:id": {
     "description": "Delete a collection by id",
     "response": {}
+  },
+  "GET /api/artworks": {
+    "description": "Get all artworks",
+    "query": {
+      "page": "integer",
+      "limit": "Hardcoded to 15",
+      "example": "GET /api/artworks?page=1"
+    },
+    "response": {
+      "data": [
+        {
+          "id": "integer",
+          "favourite_list_id": "integer",
+          "artwork_id": "integer",
+          "gallery": "string"
+        }
+      ],
+      "pagination": {
+        "total_page": "integer",
+        "current_page": "integer",
+        "total_results": "integer"
+      }
+    }
   }
 }

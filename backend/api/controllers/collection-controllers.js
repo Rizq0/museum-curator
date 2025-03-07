@@ -2,6 +2,7 @@ const {
   fetchAllCollections,
   setACollection,
   fetchACollection,
+  fetchAllArtworkByFavouriteList,
 } = require("../models/collection-models");
 
 exports.getAllCollections = async (req, res, next) => {
@@ -72,6 +73,31 @@ exports.deleteACollection = async (req, res, next) => {
     }
     await collection.destroy();
     res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getArtworksByCollection = async (req, res, next) => {
+  const { id } = req.params;
+  const page = parseInt(req.query.page) || 1;
+  const limit = 15;
+  const offset = (page - 1) * limit;
+  if (isNaN(parseInt(id))) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+  try {
+    const collection = await fetchACollection(id);
+    if (!collection) {
+      return res.status(404).json({ message: "Collection Not Found" });
+    }
+    const artworks = await fetchAllArtworkByFavouriteList(
+      id,
+      page,
+      limit,
+      offset
+    );
+    res.status(200).json(artworks);
   } catch (error) {
     next(error);
   }

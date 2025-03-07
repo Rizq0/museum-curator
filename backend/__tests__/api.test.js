@@ -320,4 +320,65 @@ describe("API Endpoints", () => {
       expect(response.body).toEqual({ message: "Invalid Gallery" });
     });
   });
+  describe("GET /api/collections/:id/artworks", () => {
+    it("200: Returns paginated (15 limit) artworks within a collection by favourite_list_id.", async () => {
+      const response = await request(app).get(
+        "/api/collections/1/artworks?page=1"
+      );
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      body.forEach((artwork) => {
+        expect(artwork).toHaveProperty("id");
+        expect(artwork).toHaveProperty("favourite_list_id");
+        expect(artwork).toHaveProperty("artwork_id");
+        expect(artwork).toHaveProperty("gallery");
+      });
+    });
+    it("200: Returns the pagination object for the first page.", async () => {
+      const response = await request(app).get(
+        "/api/collections/1/artworks?page=1"
+      );
+      const body = response.body.pagination;
+      expect(response.status).toBe(200);
+      expect(body).toHaveProperty("total_pages");
+      expect(body).toHaveProperty("current_page");
+      expect(body).toHaveProperty("total_results");
+    });
+    it("404: Returns an error if collection id does not exist.", async () => {
+      const response = await request(app).get(
+        "/api/collections/100/artworks?page=1"
+      );
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Collection Not Found" });
+    });
+    it("400: Returns an error if collection id is not a number.", async () => {
+      const response = await request(app).get(
+        "/api/collections/invalid/artworks?page=1"
+      );
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+    it("200: Returns the first page of the collection if page is NaN or invalid.", async () => {
+      const response = await request(app).get(
+        "/api/collections/1/artworks?page=invalid"
+      );
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body).toHaveLength(2);
+    });
+    it("200: Returns the first page of artworks if page is missing from query.", async () => {
+      const response = await request(app).get("/api/collections/1/artworks");
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(2);
+    });
+    it("200: Returns the first page of artworks if page is incorrectly spelt.", async () => {
+      const response = await request(app).get(
+        "/api/collections/1/artworks?pag=1"
+      );
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(2);
+    });
+  });
 });

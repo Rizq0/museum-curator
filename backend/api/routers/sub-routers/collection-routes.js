@@ -5,6 +5,7 @@ const {
   getACollection,
   patchACollection,
   deleteACollection,
+  getArtworksByCollection,
 } = require("../../controllers/collection-controllers");
 
 collectionRouter.get("/", getAllCollections);
@@ -12,5 +13,6 @@ collectionRouter.post("/", postACollection);
 collectionRouter.get("/:id", getACollection);
 collectionRouter.put("/:id", patchACollection);
 collectionRouter.delete("/:id", deleteACollection);
+collectionRouter.get("/:id/artworks", getArtworksByCollection);
 
 module.exports = collectionRouter;

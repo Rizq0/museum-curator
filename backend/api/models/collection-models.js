@@ -1,4 +1,5 @@
 const FavouriteList = require("../../database/models/FavouriteList");
+const Favourite = require("../../database/models/Favourite");
 
 // fetchAllCollections has a hardcoded user_id of 1 for MVP purposes, due to no authentication setup
 exports.fetchAllCollections = async (page, limit, offset) => {
@@ -39,4 +40,23 @@ exports.fetchACollection = async (id) => {
   } catch (error) {
     next(error);
   }
+};
+
+exports.fetchAllArtworkByFavouriteList = async (id, page, limit, offset) => {
+  const { count, rows } = await Favourite.findAndCountAll({
+    limit: limit,
+    offset: offset,
+    where: {
+      favourite_list_id: id,
+    },
+  });
+  const totalPages = Math.ceil(count / limit);
+  return {
+    data: rows,
+    pagination: {
+      total_pages: Number(totalPages),
+      current_page: Number(page),
+      total_results: Number(count),
+    },
+  };
 };

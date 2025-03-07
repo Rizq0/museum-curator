@@ -278,4 +278,46 @@ describe("API Endpoints", () => {
       expect(body.length).toBe(15);
     });
   });
+  describe("GET /api/artworks/:id?gallery=:gallery", () => {
+    it("200: Returns an artwork by id.", async () => {
+      const response = await request(app).get(
+        "/api/artworks/1?gallery=harvard"
+      );
+      const body = response.body;
+      expect(response.status).toBe(200);
+      expect(body).toHaveProperty("id");
+      expect(body).toHaveProperty("favourite_list_id");
+      expect(body).toHaveProperty("artwork_id");
+      expect(body).toHaveProperty("gallery");
+    });
+    it("404: Returns an error if artwork id does not exist.", async () => {
+      const response = await request(app).get(
+        "/api/artworks/100?gallery=harvard"
+      );
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Artwork not found" });
+    });
+    it("400: Returns an error if artwork id is not a number.", async () => {
+      const response = await request(app).get(
+        "/api/artworks/invalid?gallery=harvard"
+      );
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+    it("400: Returns an error if gallery is missing.", async () => {
+      const response = await request(app).get("/api/artworks/1");
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid Gallery" });
+    });
+    it("400: Returns an error if gallery is empty.", async () => {
+      const response = await request(app).get("/api/artworks/1?gallery=");
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid Gallery" });
+    });
+    it("400: Returns an error if gallery is not a string.", async () => {
+      const response = await request(app).get("/api/artworks/1?gallery=12345");
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid Gallery" });
+    });
+  });
 });

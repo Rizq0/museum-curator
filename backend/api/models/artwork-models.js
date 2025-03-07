@@ -15,3 +15,13 @@ exports.fetchAllArtworks = async (page, limit, offset) => {
     },
   };
 };
+
+exports.fetchAnArtworkByIdAndGallery = async (id, gallery) => {
+  const artwork = await Favourite.findOne({
+    where: {
+      artwork_id: id,
+      gallery: gallery,
+    },
+  });
+  return artwork;
+};

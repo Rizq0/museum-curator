@@ -89,5 +89,19 @@
         "total_results": "integer"
       }
     }
+  },
+  "GET /api/artworks/:id": {
+    "description": "Get an artwork by artwork_id & gallery",
+    "supported_galleries": ["harvard", "cleveland"],
+    "query": {
+      "gallery": "string",
+      "example": "GET /api/artworks/1?gallery=gallery_name"
+    },
+    "response": {
+      "id": "integer",
+      "favourite_list_id": "integer",
+      "artwork_id": "integer",
+      "gallery": "string"
+    }
   }
 }

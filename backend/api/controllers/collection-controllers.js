@@ -89,7 +89,7 @@ exports.getArtworksByCollection = async (req, res, next) => {
   try {
     const collection = await fetchACollection(id);
     if (!collection) {
-      return res.status(404).json({ message: "Collection Not Found" });
+      return res.status(404).json({ message: "Collection not found" });
     }
     const artworks = await fetchAllArtworkByFavouriteList(
       id,

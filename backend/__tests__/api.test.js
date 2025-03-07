@@ -349,7 +349,7 @@ describe("API Endpoints", () => {
         "/api/collections/100/artworks?page=1"
       );
       expect(response.status).toBe(404);
-      expect(response.body).toEqual({ message: "Collection Not Found" });
+      expect(response.body).toEqual({ message: "Collection not found" });
     });
     it("400: Returns an error if collection id is not a number.", async () => {
       const response = await request(app).get(

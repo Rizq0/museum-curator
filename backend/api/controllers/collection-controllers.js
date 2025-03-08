@@ -4,6 +4,7 @@ const {
   fetchACollection,
   fetchAllArtworkByFavouriteList,
   setArtworkToFavouriteList,
+  deleteArtworkFromFavouriteList,
 } = require("../models/collection-models");
 
 exports.getAllCollections = async (req, res, next) => {
@@ -135,6 +136,26 @@ exports.postArtworkToCollection = async (req, res, next) => {
       return res.status(400).json(response);
     }
     res.status(201).json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteArtworkFromCollection = async (req, res, next) => {
+  const { id, artwork_id } = req.params;
+  if (isNaN(parseInt(id)) || isNaN(parseInt(artwork_id))) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+  try {
+    const collection = await fetchACollection(id);
+    if (!collection) {
+      return res.status(404).json({ message: "Collection not found" });
+    }
+    const response = await deleteArtworkFromFavouriteList(id, artwork_id);
+    if (response.message === "Artwork not found in collection") {
+      return res.status(404).json(response);
+    }
+    await res.status(204).send();
   } catch (error) {
     next(error);
   }

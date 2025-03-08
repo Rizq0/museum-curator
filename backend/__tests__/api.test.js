@@ -461,7 +461,7 @@ describe("API Endpoints", () => {
         message: "Missing required parameters",
       });
     });
-    it("400: Returns an error if artwork already exists in collection.", async () => {
+    it("400: Returns an error if artwork already exists in collection with the same, favourite_list_id, artwork_id and gallery.", async () => {
       const response = await request(app)
         .post("/api/collections/1/artworks")
         .send({
@@ -484,6 +484,45 @@ describe("API Endpoints", () => {
       expect(response.body).toEqual({
         message: "Required parameters are incorrect",
       });
+    });
+  });
+  describe("DELETE /api/collections/:id/artworks/:artwork_id", () => {
+    it("204: Deletes an artwork by collection_id and artwork_id.", async () => {
+      const response = await request(app).delete(
+        "/api/collections/1/artworks/1"
+      );
+      expect(response.status).toBe(204);
+      expect(response.body).toEqual({});
+    });
+    it("404: Returns an error if artwork id does not exist.", async () => {
+      const response = await request(app).delete(
+        "/api/collections/1/artworks/100"
+      );
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({
+        message: "Artwork not found in collection",
+      });
+    });
+    it("400: Returns an error if artwork id is not a number.", async () => {
+      const response = await request(app).delete(
+        "/api/collections/1/artworks/invalid"
+      );
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+    it("404: Returns an error if collection id does not exist.", async () => {
+      const response = await request(app).delete(
+        "/api/collections/100/artworks/1"
+      );
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Collection not found" });
+    });
+    it("400: Returns an error if collection id is not a number.", async () => {
+      const response = await request(app).delete(
+        "/api/collections/invalid/artworks/1"
+      );
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
     });
   });
 });

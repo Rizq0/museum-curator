@@ -88,3 +88,24 @@ exports.setArtworkToFavouriteList = async (
     next(error);
   }
 };
+
+exports.deleteArtworkFromFavouriteList = async (
+  favourite_list_id,
+  artwork_id
+) => {
+  try {
+    const artwork = await Favourite.findOne({
+      where: {
+        favourite_list_id,
+        artwork_id,
+      },
+    });
+    if (!artwork) {
+      return { message: "Artwork not found in collection" };
+    }
+    await artwork.destroy();
+    return { message: "Artwork successfully removed from collection" };
+  } catch (error) {
+    next(error);
+  }
+};

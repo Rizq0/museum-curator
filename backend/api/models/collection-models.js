@@ -60,3 +60,31 @@ exports.fetchAllArtworkByFavouriteList = async (id, page, limit, offset) => {
     },
   };
 };
+
+exports.setArtworkToFavouriteList = async (
+  favourite_list_id,
+  artwork_id,
+  gallery
+) => {
+  try {
+    const checkIfArtworkExists = await Favourite.findOne({
+      where: {
+        favourite_list_id,
+        artwork_id,
+        gallery,
+      },
+    });
+    if (checkIfArtworkExists) {
+      return { message: "Artwork already exists in collection" };
+    }
+
+    const post = Favourite.create({
+      favourite_list_id,
+      artwork_id,
+      gallery,
+    });
+    return post;
+  } catch (error) {
+    next(error);
+  }
+};

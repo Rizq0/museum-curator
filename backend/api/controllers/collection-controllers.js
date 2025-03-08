@@ -3,6 +3,7 @@ const {
   setACollection,
   fetchACollection,
   fetchAllArtworkByFavouriteList,
+  setArtworkToFavouriteList,
 } = require("../models/collection-models");
 
 exports.getAllCollections = async (req, res, next) => {
@@ -98,6 +99,42 @@ exports.getArtworksByCollection = async (req, res, next) => {
       offset
     );
     res.status(200).json(artworks);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.postArtworkToCollection = async (req, res, next) => {
+  const supportedGalleries = ["harvard", "cleveland"];
+  const { id } = req.params;
+  const { artwork_id, gallery } = req.body;
+  if (isNaN(parseInt(id))) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+  if (!artwork_id || !gallery) {
+    return res.status(400).json({ message: "Missing required parameters" });
+  }
+  if (isNaN(parseInt(artwork_id))) {
+    return res
+      .status(400)
+      .json({ message: "Required parameters are incorrect" });
+  }
+  if (!supportedGalleries.includes(gallery)) {
+    return res
+      .status(400)
+      .json({ message: "Required parameters are incorrect" });
+  }
+
+  try {
+    const collection = await fetchACollection(id);
+    if (!collection) {
+      return res.status(404).json({ message: "Collection not found" });
+    }
+    const response = await setArtworkToFavouriteList(id, artwork_id, gallery);
+    if (response.message === "Artwork already exists in collection") {
+      return res.status(400).json(response);
+    }
+    res.status(201).json(response);
   } catch (error) {
     next(error);
   }

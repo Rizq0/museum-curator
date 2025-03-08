@@ -103,5 +103,28 @@
       "artwork_id": "integer",
       "gallery": "string"
     }
+  },
+  "GET /api/collections/:id/artworks": {
+    "description": "Get all artworks in a collection specified by collection_id",
+    "query": {
+      "page": "integer",
+      "limit": "Hardcoded to 15",
+      "example": "GET /api/collections/1/artworks?page=1"
+    },
+    "response": {
+      "data": [
+        {
+          "id": "integer",
+          "favourite_list_id": "integer",
+          "artwork_id": "integer",
+          "gallery": "string"
+        }
+      ],
+      "pagination": {
+        "total_page": "integer",
+        "current_page": "integer",
+        "total_results": "integer"
+      }
+    }
   }
 }

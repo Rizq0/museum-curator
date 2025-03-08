@@ -381,4 +381,109 @@ describe("API Endpoints", () => {
       expect(body.length).toBe(2);
     });
   });
+  describe("POST /api/collections/:id/artworks", () => {
+    it("201: Posts an new artwork, with a favourite_list_id.", async () => {
+      const response = await request(app)
+        .post("/api/collections/1/artworks")
+        .send({
+          artwork_id: 1650,
+          gallery: "harvard",
+        });
+      const body = response.body;
+      expect(response.status).toBe(201);
+      expect(body).toHaveProperty("id");
+      expect(body).toHaveProperty("favourite_list_id", "1");
+      expect(body).toHaveProperty("artwork_id", 1650);
+      expect(body).toHaveProperty("gallery", "harvard");
+    });
+    it("400: Returns an error if artwork_id or gallery is missing.", async () => {
+      const response = await request(app)
+        .post("/api/collections/1/artworks")
+        .send({
+          artwork_id: 1650,
+        });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Missing required parameters" });
+    });
+    it("400: Returns an error if artwork_id or gallery is incorrect data type.", async () => {
+      const response = await request(app)
+        .post("/api/collections/1/artworks")
+        .send({
+          artwork_id: "test",
+          gallery: 12345,
+        });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Required parameters are incorrect",
+      });
+    });
+    it("400: Returns an error if collection id does not exist.", async () => {
+      const response = await request(app)
+        .post("/api/collections/100/artworks")
+        .send({
+          artwork_id: 1650,
+          gallery: "harvard",
+        });
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Collection not found" });
+    });
+    it("400: Returns an error if collection id is not a number.", async () => {
+      const response = await request(app)
+        .post("/api/collections/invalid/artworks")
+        .send({
+          artwork_id: 1650,
+          gallery: "harvard",
+        });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+    it("400: Returns an error if gallery is not supported.", async () => {
+      const response = await request(app)
+        .post("/api/collections/1/artworks")
+        .send({
+          artwork_id: 1650,
+          gallery: "invalid",
+        });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Required parameters are incorrect",
+      });
+    });
+    it("400: Returns an error if gallery is empty.", async () => {
+      const response = await request(app)
+        .post("/api/collections/1/artworks")
+        .send({
+          artwork_id: 1650,
+          gallery: "",
+        });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Missing required parameters",
+      });
+    });
+    it("400: Returns an error if artwork already exists in collection.", async () => {
+      const response = await request(app)
+        .post("/api/collections/1/artworks")
+        .send({
+          artwork_id: 1,
+          gallery: "harvard",
+        });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Artwork already exists in collection",
+      });
+    });
+    it("400: Returns an error if gallery name has incorrect casing.", async () => {
+      const response = await request(app)
+        .post("/api/collections/1/artworks")
+        .send({
+          artwork_id: 1650,
+          gallery: "Harvard",
+        });
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        message: "Required parameters are incorrect",
+      });
+    });
+  });
 });

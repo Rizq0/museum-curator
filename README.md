@@ -31,3 +31,7 @@ https://museum-curator-api.onrender.com/api
 
 Be aware there could be a 50 second delay as Render spins down instances that are unused.
 Database does not persist across restarts, this is due to the project being an MVP. Instead production data is reseeded after every restart.
+
+If running locally, please create a .env file in museum-curator/backend .
+Inside add a "PORT=9090"
+Please bare in mind that the frontend uses the hosted version of the backend.

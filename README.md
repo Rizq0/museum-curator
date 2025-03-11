@@ -25,3 +25,9 @@ Backend:
 - dotenv
 - cors
 - nodemon
+
+Backend is currently hosted on Render:
+https://museum-curator-api.onrender.com/api
+
+Be aware there could be a 50 second delay as Render spins down instances that are unused.
+Database does not persist across restarts, this is due to the project being an MVP. Instead production data is reseeded after every restart.

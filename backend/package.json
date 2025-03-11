@@ -5,9 +5,11 @@
   "scripts": {
     "test": "NODE_ENV=test jest",
     "dev": "nodemon listen.js",
+    "start": "node listen.js",
     "test-db": "node database/connection.js",
     "init-db": "node database/utils/init-db.js",
-    "seed:test": "NODE_ENV=test node database/seed/seed-database.js"
+    "seed:test": "NODE_ENV=test node database/seed/seed-database.js",
+    "seed:prod": "NODE_ENV=production node database/seed/seed-database.js"
   },
   "keywords": [],
   "author": "",

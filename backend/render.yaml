@@ -1,13 +1,15 @@
+# Exported from Render on 2025-03-11T13:05:02Z
 services:
   - type: web
-    name: museum-curator
-    env: node
-    buildCommand: npm install
-    startCommand: npm start
+    name: museum-curator-api
+    runtime: node
+    repo: https://github.com/Rizq0/museum-curator
+    plan: free
     envVars:
       - key: NODE_ENV
-        value: production
-    autoDeploy: true
-    buildFilter:
-      paths:
-        - ./**
+        sync: false
+    region: frankfurt
+    buildCommand: yarn install
+    startCommand: yarn start
+    rootDir: backend
+version: "1"

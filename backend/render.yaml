@@ -1,4 +1,3 @@
-# Exported from Render on 2025-03-11T13:05:02Z
 services:
   - type: web
     name: museum-curator-api
@@ -12,4 +11,8 @@ services:
     buildCommand: yarn install
     startCommand: yarn start
     rootDir: backend
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - backend/**
 version: "1"

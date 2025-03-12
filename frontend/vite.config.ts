@@ -10,4 +10,18 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      "/harvard": {
+        target: "https://api.harvardartmuseums.org",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/harvard/, ""),
+      },
+      "/cleveland": {
+        target: "https://openaccess-api.clevelandart.org/api",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/cleveland/, ""),
+      },
+    },
+  },
 });

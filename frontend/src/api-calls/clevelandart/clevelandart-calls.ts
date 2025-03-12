@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://openaccess-api.clevelandart.org/api",
+  baseURL: "/cleveland",
   timeout: 1000,
 });
 
@@ -15,6 +15,14 @@ export const getClevelandArt = async (page: number) => {
         limit: limit,
       },
     });
+  } catch (error) {
+    throw new Error("Error fetching Cleveland Art");
+  }
+};
+
+export const getClevelandArtById = async (id: number) => {
+  try {
+    return await apiClient.get(`/artworks/${id}`);
   } catch (error) {
     throw new Error("Error fetching Cleveland Art");
   }

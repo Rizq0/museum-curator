@@ -47,10 +47,6 @@ export const Homepage = () => {
   };
 
   useEffect(() => {
-    console.log("harvard data:", harvardAll?.data.records);
-    console.log("cleveland data:", clevelandAll?.data.data);
-    console.log(totalPages);
-
     if (gallery === "harvard" && harvardAll) {
       setTotalPages(harvardAll.data.info.pages);
     }

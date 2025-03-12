@@ -43,10 +43,12 @@ export const ArtworkDetailed = () => {
 
   const handleAddToFavourites = () => {
     console.log("Add to Favourites");
+    setIsFavourite(true);
   };
 
   const handleRemoveFromFavourites = () => {
     console.log("Remove from Favourites");
+    setIsFavourite(false);
   };
 
   const checkIfFavourite = () => {

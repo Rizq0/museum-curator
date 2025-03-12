@@ -15,3 +15,11 @@ export const checkIfArtworkIsFavourited = async (
     throw new Error("Error checking if artwork is favourited");
   }
 };
+
+export const fetchCollections = async () => {
+  try {
+    return await apiClient.get("/collections");
+  } catch (error) {
+    throw new Error("Error fetching collections");
+  }
+};

@@ -1,6 +1,11 @@
 import { ReactNode, useState, useEffect } from "react";
 import { Switch } from "./ui/switch";
-import { IconSunHigh, IconMoonStars, IconHome } from "@tabler/icons-react";
+import {
+  IconSunHigh,
+  IconMoonStars,
+  IconHome,
+  IconHeart,
+} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
 const initialiseTheme = () => {
@@ -39,15 +44,24 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     navigate("/");
   };
 
+  const handleFavourites = () => {
+    navigate("/collections");
+  };
+
   return (
     <div className="bg-lbg-purple dark:bg-dbg-purple min-h-screen min-w-[365px] flex flex-col items-center">
       <div className="max-w-[1280px] p-4 w-full flex flex-col min-h-screen">
         <header className="flex flex-row justify-between items-center w-full py-4">
-          <div
-            className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
-            aria-label="Home"
-          >
-            <IconHome height={48} width={48} onClick={handleHome} />
+          <div className="flex items-center space-x-4">
+            <div
+              className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
+              aria-label="Home"
+            >
+              <IconHome height={48} width={48} onClick={handleHome} />
+            </div>
+            <div className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer">
+              <IconHeart height={48} width={48} onClick={handleFavourites} />
+            </div>
           </div>
           <div className="flex items-center space-x-2">
             <Switch

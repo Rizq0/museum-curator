@@ -1,14 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getHarvardArtById } from "../../api-calls/harvardart/harvardart-calls";
 import { getClevelandArtById } from "../../api-calls/clevelandart/clevelandart-calls";
 import { LoaderIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import NoImage from "../../assets/No-Image-Placeholder.svg";
+import { IconHeartPlus, IconHeartMinus } from "@tabler/icons-react";
+import { checkIfArtworkIsFavourited } from "../../api-calls/backend/backend-calls";
 
 export const ArtworkDetailed = () => {
   let { gallery, id } = useParams();
   const navigate = useNavigate();
+  const [isFavourite, setIsFavourite] = useState(false);
 
   const harvardQueryEnabled = gallery === "harvard" && id !== undefined;
   const clevelandQueryEnabled = gallery === "cleveland" && id !== undefined;
@@ -37,22 +41,44 @@ export const ArtworkDetailed = () => {
     navigate(-1);
   };
 
+  const handleAddToFavourites = () => {
+    console.log("Add to Favourites");
+  };
+
+  const handleRemoveFromFavourites = () => {
+    console.log("Remove from Favourites");
+  };
+
+  const checkIfFavourite = () => {
+    if (id && gallery) {
+      checkIfArtworkIsFavourited(id, gallery)
+        .then(() => {
+          setIsFavourite(true);
+        })
+        .catch(() => {
+          setIsFavourite(false);
+        });
+    }
+  };
+
   useEffect(() => {
-    console.log(harvardArt);
-    console.log(clevelandArt);
+    checkIfFavourite();
   }, [harvardArt, clevelandArt]);
 
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-3xl">Artwork Detailed</h1>
-      <div className="flex justify-start w-full">
-        <Button
-          className="bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0 cursor-pointer mt-4"
-          onClick={() => handleBack()}
-        >
-          BACK
-        </Button>
-      </div>
+      {((gallery === "harvard" && !harvardLoad) ||
+        (gallery === "cleveland" && !clevelandLoad)) && (
+        <div className="flex justify-start w-full">
+          <Button
+            className="bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0 cursor-pointer mt-4"
+            onClick={() => handleBack()}
+          >
+            BACK
+          </Button>
+        </div>
+      )}
 
       {(harvardLoad || clevelandLoad) && (
         <div className="flex justify-center mt-4">
@@ -63,34 +89,62 @@ export const ArtworkDetailed = () => {
         <h1 className="mt-4">Error fetching Artwork</h1>
       )}
       {gallery === "harvard" && harvardArt && (
-        <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden mt-4">
-          {harvardArt.data.primaryimageurl && (
-            <div className="relative bg-gray-100 flex justify-center">
+        <div className="bg-white border border-dbg-purple dark:border-lbg-purple rounded-lg shadow-sm overflow-hidden mt-4">
+          {(harvardArt.data.primaryimageurl && (
+            <div className="relative bg-lbg-purple dark:bg-dbg-purple flex justify-center">
               <img
                 src={harvardArt.data.primaryimageurl}
                 alt={harvardArt.data.title}
-                className="max-h-[400px]"
+                className="max-h-[1080px] min-w-[341px] max-w-full object-contain"
+              />
+            </div>
+          )) || (
+            <div className="relative bg-lbg-purple dark:bg-dbg-purple flex justify-center">
+              <img
+                src={NoImage}
+                alt={harvardArt.data.title}
+                className="max-h-[1080px] min-w-[341px] max-w-full object-contain"
               />
             </div>
           )}
 
           <div className="p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              {harvardArt.data.title}
-            </h2>
+            <div className="flex flex-row justify-between flex-wrap">
+              <h2 className="text-2xl font-bold text-dbg-purple mb-4">
+                {!isFavourite ? (
+                  <IconHeartPlus
+                    className="cursor-pointer hover:text-dbuttonbg-pink text-dbg-purple"
+                    height={48}
+                    width={48}
+                    onClick={() => handleAddToFavourites()}
+                  />
+                ) : (
+                  <IconHeartMinus
+                    className="cursor-pointer hover:text-dbuttonbg-pink text-dbg-purple"
+                    height={48}
+                    width={48}
+                    onClick={() => handleRemoveFromFavourites()}
+                  />
+                )}
+              </h2>
+            </div>
 
             <div className="grid grid-cols-2 gap-4 mt-4">
               {harvardArt.data.dated && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Date</h3>
-                  <p className="mt-1 text-gray-500">{harvardArt.data.dated}</p>
+                  <h3 className="text-sm font-medium text-dbg-purple">Date</h3>
+                  <p className="mt-1 text-dbg-purple">
+                    {harvardArt.data.dated}
+                  </p>
                 </div>
               )}
 
               {harvardArt.data.culture && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Culture</h3>
-                  <p className="mt-1 text-gray-500">
+                  <h3 className="text-sm font-medium text-dbg-purple">
+                    Culture
+                  </h3>
+                  <p className="mt-1 text-dbg-purple">
                     {harvardArt.data.culture}
                   </p>
                 </div>
@@ -98,10 +152,10 @@ export const ArtworkDetailed = () => {
 
               {harvardArt.data.classification && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">
+                  <h3 className="text-sm font-medium text-dbg-purple">
                     Classification
                   </h3>
-                  <p className="mt-1 text-gray-500">
+                  <p className="mt-1 text-dbg-purple">
                     {harvardArt.data.classification}
                   </p>
                 </div>
@@ -109,11 +163,31 @@ export const ArtworkDetailed = () => {
 
               {harvardArt.data.technique && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">
+                  <h3 className="text-sm font-medium text-dbg-purple">
                     Technique
                   </h3>
-                  <p className="mt-1 text-gray-500">
+                  <p className="mt-1 text-dbg-purple">
                     {harvardArt.data.technique}
+                  </p>
+                </div>
+              )}
+              {harvardArt.data.period && (
+                <div>
+                  <h3 className="text-sm font-medium text-dbg-purple">
+                    Period
+                  </h3>
+                  <p className="mt-1 text-dbg-purple">
+                    {harvardArt.data.period}
+                  </p>
+                </div>
+              )}
+              {harvardArt.data.copyright && (
+                <div>
+                  <h3 className="text-sm font-medium text-dbg-purple">
+                    Copyright
+                  </h3>
+                  <p className="mt-1 text-dbg-purple">
+                    {harvardArt.data.copyright}
                   </p>
                 </div>
               )}
@@ -121,10 +195,10 @@ export const ArtworkDetailed = () => {
 
             {harvardArt.data.description && (
               <div className="mt-6">
-                <h3 className="text-sm font-medium text-gray-500">
+                <h3 className="text-sm font-medium text-dbg-purple">
                   Description
                 </h3>
-                <p className="mt-1 text-gray-700">
+                <p className="mt-1 text-dbg-purple">
                   {harvardArt.data.description}
                 </p>
               </div>
@@ -133,28 +207,53 @@ export const ArtworkDetailed = () => {
         </div>
       )}
       {gallery === "cleveland" && clevelandArt && (
-        <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden mt-4">
-          {clevelandArt.data.data.images &&
+        <div className="bg-white border border-dbg-purple dark:border-lbg-purple rounded-lg shadow-sm overflow-hidden mt-4">
+          {(clevelandArt.data.data.images &&
             clevelandArt.data.data.images.web && (
-              <div className="aspect-w-16 aspect-h-9 bg-gray-100">
+              <div className="relative bg-lbg-purple dark:bg-dbg-purple flex justify-center">
                 <img
                   src={clevelandArt.data.data.images.web.url}
                   alt={clevelandArt.data.data.title}
-                  className="object-contain w-full h-full"
+                  className="max-h-[1080px] min-w-[341px] max-w-full object-contain"
                 />
               </div>
-            )}
+            )) || (
+            <div className="relative bg-lbg-purple dark:bg-dbg-purple flex justify-center">
+              <img
+                src={NoImage}
+                alt={clevelandArt.data.data.title}
+                className="max-h-[1080px] min-w-[341px] max-w-full object-contain"
+              />
+            </div>
+          )}
 
-          <div className="p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              {clevelandArt.data.data.title}
-            </h2>
+          <div className="p-6 bg-lbuttonbg-white rounded-lg">
+            <div className="flex flex-row justify-between flex-wrap">
+              <h2 className="text-2xl font-bold text-dbg-purple mb-4">
+                {clevelandArt.data.data.title}
+              </h2>
+              {!isFavourite ? (
+                <IconHeartPlus
+                  className="cursor-pointer hover:text-dbuttonbg-pink text-dbg-purple"
+                  height={48}
+                  width={48}
+                  onClick={() => handleAddToFavourites()}
+                />
+              ) : (
+                <IconHeartMinus
+                  className="cursor-pointer hover:text-dbuttonbg-pink text-dbg-purple"
+                  height={48}
+                  width={48}
+                  onClick={() => handleRemoveFromFavourites()}
+                />
+              )}
+            </div>
 
             <div className="grid grid-cols-2 gap-4 mt-4">
               {clevelandArt.data.data.creation_date && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Date</h3>
-                  <p className="mt-1 text-gray-500">
+                  <h3 className="text-sm font-medium text-dbg-purple">Date</h3>
+                  <p className="mt-1 text-dbg-purple">
                     {clevelandArt.data.data.creation_date}
                   </p>
                 </div>
@@ -162,8 +261,10 @@ export const ArtworkDetailed = () => {
 
               {clevelandArt.data.data.culture && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Culture</h3>
-                  <p className="mt-1 text-gray-500">
+                  <h3 className="text-sm font-medium text-dbg-purple">
+                    Culture
+                  </h3>
+                  <p className="mt-1 text-dbg-purple">
                     {clevelandArt.data.data.culture[0]}
                   </p>
                 </div>
@@ -171,8 +272,8 @@ export const ArtworkDetailed = () => {
 
               {clevelandArt.data.data.type && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">Type</h3>
-                  <p className="mt-1 text-gray-500">
+                  <h3 className="text-sm font-medium text-dbg-purple">Type</h3>
+                  <p className="mt-1 text-dbg-purple">
                     {clevelandArt.data.data.type}
                   </p>
                 </div>
@@ -180,11 +281,21 @@ export const ArtworkDetailed = () => {
 
               {clevelandArt.data.data.technique && (
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">
+                  <h3 className="text-sm font-medium text-dbg-purple">
                     Technique
                   </h3>
-                  <p className="mt-1 text-gray-500">
+                  <p className="mt-1 text-dbg-purple">
                     {clevelandArt.data.data.technique}
+                  </p>
+                </div>
+              )}
+              {clevelandArt.data.data.copyright && (
+                <div>
+                  <h3 className="text-sm font-medium text-dbg-purple">
+                    Copyright
+                  </h3>
+                  <p className="mt-1 text-dbg-purple">
+                    {clevelandArt.data.data.copyright}
                   </p>
                 </div>
               )}
@@ -192,10 +303,10 @@ export const ArtworkDetailed = () => {
 
             {clevelandArt.data.data.description && (
               <div className="mt-6">
-                <h3 className="text-sm font-medium text-gray-500">
+                <h3 className="text-sm font-medium text-dbg-purple">
                   Description
                 </h3>
-                <p className="mt-1 text-gray-700">
+                <p className="mt-1 text-dbg-purple">
                   {clevelandArt.data.data.description}
                 </p>
               </div>
@@ -203,14 +314,17 @@ export const ArtworkDetailed = () => {
           </div>
         </div>
       )}
-      <div className="flex justify-start w-full">
-        <Button
-          className="bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0 cursor-pointer mt-4"
-          onClick={() => handleBack()}
-        >
-          BACK
-        </Button>
-      </div>
+      {((gallery === "harvard" && !harvardLoad) ||
+        (gallery === "cleveland" && !clevelandLoad)) && (
+        <div className="flex justify-start w-full">
+          <Button
+            className="bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0 cursor-pointer mt-4"
+            onClick={() => handleBack()}
+          >
+            BACK
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

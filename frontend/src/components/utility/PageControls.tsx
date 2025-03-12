@@ -41,7 +41,7 @@ export const PageControls = ({
     <div className="flex flex-row flex-wrap md:justify-between w-full justify-center">
       <div className="mt-4">
         <Select onValueChange={(value) => setCurrentGallery(value)}>
-          <SelectTrigger className="w-[230px] cursor-pointer text-base font-semibold bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0">
+          <SelectTrigger className="w-[230px] cursor-pointer text-base font-semibold bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0 mr-0 sm:mr-2">
             <SelectValue
               placeholder={
                 currentGallery === "harvard"

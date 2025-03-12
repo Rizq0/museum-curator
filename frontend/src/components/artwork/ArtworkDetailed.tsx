@@ -37,6 +37,20 @@ export const ArtworkDetailed = () => {
     enabled: clevelandQueryEnabled,
   });
 
+  const { data: isFavouriteData } = useQuery({
+    queryKey: ["isFavourite", id, gallery],
+    queryFn: () => checkIfArtworkIsFavourited(id ?? "", gallery ?? ""),
+    enabled: id !== undefined && gallery !== undefined,
+  });
+
+  useEffect(() => {
+    if (isFavouriteData) {
+      setIsFavourite(true);
+    } else {
+      setIsFavourite(false);
+    }
+  }, [isFavouriteData]);
+
   const handleBack = () => {
     navigate(-1);
   };
@@ -50,22 +64,6 @@ export const ArtworkDetailed = () => {
     console.log("Remove from Favourites");
     setIsFavourite(false);
   };
-
-  const checkIfFavourite = () => {
-    if (id && gallery) {
-      checkIfArtworkIsFavourited(id, gallery)
-        .then(() => {
-          setIsFavourite(true);
-        })
-        .catch(() => {
-          setIsFavourite(false);
-        });
-    }
-  };
-
-  useEffect(() => {
-    checkIfFavourite();
-  }, [harvardArt, clevelandArt]);
 
   return (
     <div className="flex flex-col items-center">

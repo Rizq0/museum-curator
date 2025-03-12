@@ -111,22 +111,23 @@ export const ArtworkDetailed = () => {
           <div className="p-6">
             <div className="flex flex-row justify-between flex-wrap">
               <h2 className="text-2xl font-bold text-dbg-purple mb-4">
-                {!isFavourite ? (
-                  <IconHeartPlus
-                    className="cursor-pointer hover:text-dbuttonbg-pink text-dbg-purple"
-                    height={48}
-                    width={48}
-                    onClick={() => handleAddToFavourites()}
-                  />
-                ) : (
-                  <IconHeartMinus
-                    className="cursor-pointer hover:text-dbuttonbg-pink text-dbg-purple"
-                    height={48}
-                    width={48}
-                    onClick={() => handleRemoveFromFavourites()}
-                  />
-                )}
+                {harvardArt.data.title}
               </h2>
+              {!isFavourite ? (
+                <IconHeartPlus
+                  className="cursor-pointer hover:text-dbuttonbg-pink text-dbg-purple"
+                  height={48}
+                  width={48}
+                  onClick={() => handleAddToFavourites()}
+                />
+              ) : (
+                <IconHeartMinus
+                  className="cursor-pointer hover:text-dbuttonbg-pink text-dbg-purple"
+                  height={48}
+                  width={48}
+                  onClick={() => handleRemoveFromFavourites()}
+                />
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4 mt-4">

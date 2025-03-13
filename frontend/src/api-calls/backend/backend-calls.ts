@@ -16,9 +16,9 @@ export const checkIfArtworkIsFavourited = async (
   }
 };
 
-export const fetchCollections = async () => {
+export const fetchCollections = async (page: number) => {
   try {
-    return await apiClient.get("/collections");
+    return await apiClient.get(`/collections?page=${page}`);
   } catch (error) {
     throw new Error("Error fetching collections");
   }

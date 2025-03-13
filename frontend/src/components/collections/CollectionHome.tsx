@@ -22,7 +22,6 @@ export const CollectionHome = () => {
   });
 
   useEffect(() => {
-    console.log("Data structure:", data);
     const pagination = data?.data?.pagination;
 
     if (pagination) {

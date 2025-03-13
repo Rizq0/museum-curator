@@ -1,5 +1,6 @@
-import { IconHeartMinus, IconHeartPlus } from "@tabler/icons-react";
 import NoImage from "../../assets/No-Image-Placeholder.svg";
+import { RemoveFromFavourites } from "./RemoveFromFavourites";
+import { AddToFavourites } from "./AddToFavourites";
 
 type ClevelandArtworkDisplayProps = {
   artwork: any;
@@ -81,23 +82,14 @@ export const ClevelandArtworkDisplay = ({
         )}
 
         {!isFavourite ? (
-          <div className="flex flex-row justify-center my-6">
-            <IconHeartPlus
-              className="cursor-pointer hover:text-dbuttonbg-pink text-dheadline-white dark:text-dbg-purple"
-              height={48}
-              width={48}
-              onClick={addToFavourites}
-            />
-          </div>
+          <AddToFavourites addToFavourites={addToFavourites} />
         ) : (
-          <div className="flex flex-row justify-center my-6">
-            <IconHeartMinus
-              className="cursor-pointer hover:text-dbuttonbg-pink text-dheadline-white dark:text-dbg-purple"
-              height={48}
-              width={48}
-              onClick={removeFromFavourites}
-            />
-          </div>
+          <RemoveFromFavourites
+            collectionData={collectionData}
+            collectionLoading={collectionLoading}
+            collectionError={collectionError}
+            removeFromFavourites={removeFromFavourites}
+          />
         )}
       </div>
     </div>

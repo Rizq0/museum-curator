@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCollections } from "../../api-calls/backend/backend-calls";
 import { useState, useEffect } from "react";
 import { PaginationOnly } from "../utility/PaginationOnly";
+import { DeleteCollection } from "./DeleteCollection";
 
 export const CollectionHome = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,11 +97,8 @@ export const CollectionHome = () => {
                     >
                       Edit
                     </TableCell>
-                    <TableCell
-                      className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink"
-                      onClick={() => console.log("handle delete")}
-                    >
-                      Delete
+                    <TableCell className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink">
+                      <DeleteCollection collectionId={collection.id} />
                     </TableCell>
                   </TableRow>
                 ))}

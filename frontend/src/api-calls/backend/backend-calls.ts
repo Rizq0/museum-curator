@@ -62,3 +62,11 @@ export const addArtworkToCollection = async (
     throw new Error("Error adding artwork to collection");
   }
 };
+
+export const deleteCollectionById = async (id: number) => {
+  try {
+    return await apiClient.delete(`/collections/${id}`);
+  } catch (error) {
+    throw new Error("Error deleting collection");
+  }
+};

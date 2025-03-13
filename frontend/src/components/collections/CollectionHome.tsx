@@ -55,22 +55,22 @@ export const CollectionHome = () => {
             <Table className="mt-4">
               <TableHeader>
                 <TableRow className="dark:bg-dbuttonbg-pink bg-dbg-purple dark:hover:bg-dbuttonbg-pink  hover:bg-dbg-purple">
-                  <TableHead className="w-[100px] text-dheadline-white  dark:text-dbg-purple">
+                  <TableHead className="w-[100px] text-dheadline-white font-bold text-lg  dark:text-dbg-purple">
                     User
                   </TableHead>
-                  <TableHead className="text-dheadline-white dark:text-dbg-purple">
-                    Name
+                  <TableHead className="text-dheadline-white font-bold text-lg dark:text-dbg-purple">
+                    Collection Name
                   </TableHead>
-                  <TableHead className="text-dheadline-white dark:text-dbg-purple">
+                  <TableHead className="text-dheadline-white font-bold text-lg dark:text-dbg-purple">
                     Created
                   </TableHead>
-                  <TableHead className="text-dheadline-white dark:text-dbg-purple"></TableHead>
+                  <TableHead className="text-dheadline-white font-bold text-lg dark:text-dbg-purple"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {data?.data.data.map((collection: any) => (
                   <TableRow
-                    className="hover:bg-lbg-purple dark:hover:bg-dbg-purple"
+                    className="hover:bg-lbg-purple dark:hover:bg-dbg-purple font-bold"
                     key={collection.id}
                   >
                     <TableCell>{collection.user_id}</TableCell>

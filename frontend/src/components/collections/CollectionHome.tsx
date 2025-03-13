@@ -65,6 +65,7 @@ export const CollectionHome = () => {
                     Created
                   </TableHead>
                   <TableHead className="text-dheadline-white font-bold text-lg dark:text-dbg-purple"></TableHead>
+                  <TableHead className="text-dheadline-white font-bold text-lg dark:text-dbg-purple"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -94,6 +95,12 @@ export const CollectionHome = () => {
                       onClick={() => console.log("handle edit")}
                     >
                       Edit
+                    </TableCell>
+                    <TableCell
+                      className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink"
+                      onClick={() => console.log("handle delete")}
+                    >
+                      Delete
                     </TableCell>
                   </TableRow>
                 ))}

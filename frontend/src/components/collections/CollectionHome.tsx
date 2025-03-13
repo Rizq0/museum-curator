@@ -52,7 +52,7 @@ export const CollectionHome = () => {
       {isError && <h1>Error</h1>}
       {data && (
         <>
-          <div className="w-full max-w-[500px] mx-auto mt-4">
+          <div className="w-full max-w-[650px] mx-auto mt-4">
             <Table className="mt-4">
               <TableHeader>
                 <TableRow className="dark:bg-dbuttonbg-pink bg-dbg-purple dark:hover:bg-dbuttonbg-pink  hover:bg-dbg-purple">

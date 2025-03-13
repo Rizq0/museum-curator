@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getHarvardArtById } from "../../api-calls/harvardart/harvardart-calls";
 import { getClevelandArtById } from "../../api-calls/clevelandart/clevelandart-calls";
 import { LoaderIcon } from "lucide-react";
@@ -10,12 +10,19 @@ import { ClevelandArtworkDisplay } from "../artwork/ClevelandArtworkDisplay";
 import {
   checkIfArtworkIsFavourited,
   fetchCollectionById,
+  addArtworkToCollection,
+  deleteArtworkFromCollection,
 } from "../../api-calls/backend/backend-calls";
+import toast from "react-hot-toast";
 
 export const ArtworkDetailed = () => {
   let { gallery, id } = useParams();
   const navigate = useNavigate();
   const [isFavourite, setIsFavourite] = useState(false);
+  const [isAddingToFavourites, setIsAddingToFavourites] = useState(false);
+  const [isRemovingFromFavourites, setIsRemovingFromFavourites] =
+    useState(false);
+  const queryClient = useQueryClient();
 
   const harvardQueryEnabled = gallery === "harvard" && id !== undefined;
   const clevelandQueryEnabled = gallery === "cleveland" && id !== undefined;
@@ -69,14 +76,94 @@ export const ArtworkDetailed = () => {
     navigate(-1);
   };
 
-  const handleAddToFavourites = () => {
-    console.log("Add to Favourites");
-    setIsFavourite(true);
+  const handleAddToFavourites = (selectedCollectionId: number) => {
+    if (!id || !gallery) {
+      toast.error("Missing artwork information");
+      return;
+    }
+
+    setIsAddingToFavourites(true);
+
+    toast.promise(
+      addArtworkToCollection(selectedCollectionId, id, gallery),
+      {
+        loading: "Adding to collection...",
+        success: () => {
+          setIsFavourite(true);
+          queryClient.invalidateQueries({
+            queryKey: ["isFavourite", id, gallery],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ["collectionData", selectedCollectionId],
+          });
+          setIsAddingToFavourites(false);
+          return "Added to collection!";
+        },
+        error: (err) => {
+          console.error("Error adding to collection:", err);
+          setIsAddingToFavourites(false);
+          return "Failed to add to collection";
+        },
+      },
+      {
+        style: {
+          minWidth: "250px",
+        },
+        success: {
+          duration: 3000,
+          icon: "🎨",
+        },
+        error: {
+          duration: 3000,
+          icon: "❌",
+        },
+      }
+    );
   };
 
   const handleRemoveFromFavourites = () => {
-    console.log("Remove from Favourites");
-    setIsFavourite(false);
+    if (!id || !collectionId) {
+      toast.error("Missing artwork or collection information");
+      return;
+    }
+
+    setIsRemovingFromFavourites(true);
+
+    toast.promise(
+      deleteArtworkFromCollection(collectionId, id),
+      {
+        loading: "Removing from collection...",
+        success: () => {
+          setIsFavourite(false);
+          queryClient.invalidateQueries({
+            queryKey: ["isFavourite", id, gallery],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ["collectionData", collectionId],
+          });
+          setIsRemovingFromFavourites(false);
+          return "Removed from collection!";
+        },
+        error: (err) => {
+          console.error("Error removing from collection:", err);
+          setIsRemovingFromFavourites(false);
+          return "Failed to remove from collection";
+        },
+      },
+      {
+        style: {
+          minWidth: "250px",
+        },
+        success: {
+          duration: 3000,
+          icon: "✅",
+        },
+        error: {
+          duration: 3000,
+          icon: "❌",
+        },
+      }
+    );
   };
 
   return (
@@ -114,6 +201,8 @@ export const ArtworkDetailed = () => {
           collectionError={!!collectionError}
           addToFavourites={handleAddToFavourites}
           removeFromFavourites={handleRemoveFromFavourites}
+          isAddingToFavourites={isAddingToFavourites}
+          isRemovingFromFavourites={isRemovingFromFavourites}
         />
       )}
 
@@ -126,6 +215,8 @@ export const ArtworkDetailed = () => {
           collectionError={!!collectionError}
           addToFavourites={handleAddToFavourites}
           removeFromFavourites={handleRemoveFromFavourites}
+          isAddingToFavourites={isAddingToFavourites}
+          isRemovingFromFavourites={isRemovingFromFavourites}
         />
       )}
 

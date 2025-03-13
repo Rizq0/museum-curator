@@ -8,8 +8,10 @@ type ClevelandArtworkDisplayProps = {
   collectionData: any;
   collectionLoading: boolean;
   collectionError: boolean;
-  addToFavourites: () => void;
+  addToFavourites: (selectedCollectionId: number) => void;
   removeFromFavourites: () => void;
+  isAddingToFavourites?: boolean;
+  isRemovingFromFavourites?: boolean;
 };
 
 export const ClevelandArtworkDisplay = ({
@@ -20,6 +22,8 @@ export const ClevelandArtworkDisplay = ({
   collectionError,
   addToFavourites,
   removeFromFavourites,
+  isAddingToFavourites = false,
+  isRemovingFromFavourites = false,
 }: ClevelandArtworkDisplayProps) => {
   const artData = artwork.data.data;
 
@@ -82,13 +86,17 @@ export const ClevelandArtworkDisplay = ({
         )}
 
         {!isFavourite ? (
-          <AddToFavourites addToFavourites={addToFavourites} />
+          <AddToFavourites
+            addToFavourites={addToFavourites}
+            isAddingToFavourites={isAddingToFavourites}
+          />
         ) : (
           <RemoveFromFavourites
             collectionData={collectionData}
             collectionLoading={collectionLoading}
             collectionError={collectionError}
             removeFromFavourites={removeFromFavourites}
+            isRemovingFromFavourites={isRemovingFromFavourites}
           />
         )}
       </div>

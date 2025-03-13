@@ -3,11 +3,13 @@ import { Layout } from "./components/Layout";
 import { ArtworkDetailed } from "./components/artwork/ArtworkDetailed";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Homepage } from "./components/homepage/Homepage";
+import { Toaster } from "react-hot-toast";
 import { CollectionHome } from "./components/collections/CollectionHome";
 
 function App() {
   return (
     <>
+      <Toaster position="bottom-center" reverseOrder={false} />
       <Layout>
         <Routes>
           <Route path="/" element={<Navigate to="/homepage/cleveland/1" />} />

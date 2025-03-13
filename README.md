@@ -14,6 +14,7 @@ Frontend:
 - Shadcn/ui
 - TablerIcons
 - TailwindCSS
+- React Hot Toast
 
 Backend:
 

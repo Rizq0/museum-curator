@@ -11,6 +11,7 @@ import { PaginationOnly } from "../utility/PaginationOnly";
 
 type AddToFavouritesProps = {
   addToFavourites: (collectionId: number) => void;
+  isAddingToFavourites?: boolean;
 };
 
 type Collection = {
@@ -21,7 +22,10 @@ type Collection = {
   createdAt: string;
 };
 
-export const AddToFavourites = ({ addToFavourites }: AddToFavouritesProps) => {
+export const AddToFavourites = ({
+  addToFavourites,
+  isAddingToFavourites = false,
+}: AddToFavouritesProps) => {
   const [selectedCollectionId, setSelectedCollectionId] = useState<
     number | null
   >(null);
@@ -66,9 +70,18 @@ export const AddToFavourites = ({ addToFavourites }: AddToFavouritesProps) => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
+  useEffect(() => {
+    if (isAddingToFavourites) {
+      setOpen(false);
+    }
+  }, [isAddingToFavourites, open]);
+
   return (
     <div className="flex flex-row justify-center my-6">
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover
+        open={open}
+        onOpenChange={(isOpen) => !isAddingToFavourites && setOpen(isOpen)}
+      >
         <PopoverTrigger asChild>
           <IconHeartPlus
             className="cursor-pointer hover:text-dbuttonbg-pink text-dheadline-white dark:text-dbg-purple"
@@ -160,7 +173,8 @@ export const AddToFavourites = ({ addToFavourites }: AddToFavouritesProps) => {
               disabled={
                 selectedCollectionId === null ||
                 isLoading ||
-                collections.length === 0
+                collections.length === 0 ||
+                isAddingToFavourites
               }
             >
               Add
@@ -168,6 +182,7 @@ export const AddToFavourites = ({ addToFavourites }: AddToFavouritesProps) => {
             <Button
               className="text-lbuttonbg-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark bg-dbg-purple dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark cursor-pointer"
               onClick={() => setOpen(false)}
+              disabled={isAddingToFavourites}
             >
               Cancel
             </Button>

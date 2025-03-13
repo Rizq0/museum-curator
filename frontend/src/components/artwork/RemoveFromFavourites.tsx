@@ -55,7 +55,7 @@ export const RemoveFromFavourites = ({
         </PopoverTrigger>
         <PopoverContent className="w-[365px] p-4 bg-lbg-purple dark:bg-dbg-purple">
           <h3 className="font-medium text-dbg-purple dark:text-lbuttonbg-white text-lg mb-2">
-            Remove from Favorites?
+            Remove from Collection?
           </h3>
 
           {collectionLoading && (

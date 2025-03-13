@@ -23,3 +23,14 @@ export const fetchCollections = async (page: number) => {
     throw new Error("Error fetching collections");
   }
 };
+
+export const fetchCollectionById = async (id: number) => {
+  if (!id) {
+    throw new Error("No collection id provided");
+  }
+  try {
+    return await apiClient.get(`/collections/${id}`);
+  } catch (error) {
+    throw new Error("Error fetching collection");
+  }
+};

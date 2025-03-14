@@ -28,6 +28,9 @@ export const DeleteCollection = ({ collectionId }: DeleteCollectionProps) => {
         loading: "Deleting collection...",
         success: () => {
           queryClient.invalidateQueries({ queryKey: ["collections"] });
+          queryClient.invalidateQueries({
+            queryKey: ["isFavourite"],
+          });
           setIsDeleting(false);
           setOpen(false);
           return "Collection deleted!";

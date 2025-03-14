@@ -50,6 +50,8 @@ export const ArtworkDetailed = () => {
     queryKey: ["isFavourite", id, gallery],
     queryFn: () => checkIfArtworkIsFavourited(id ?? "", gallery ?? ""),
     enabled: id !== undefined && gallery !== undefined,
+    staleTime: 0,
+    gcTime: 0,
   });
 
   const collectionId = isFavouriteData?.data?.favourite_list_id;
@@ -64,7 +66,7 @@ export const ArtworkDetailed = () => {
   });
 
   useEffect(() => {
-    if (isFavouriteData) {
+    if (isFavouriteData?.data) {
       setIsFavourite(true);
     } else {
       setIsFavourite(false);

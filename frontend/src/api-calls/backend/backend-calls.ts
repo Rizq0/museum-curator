@@ -78,3 +78,14 @@ export const updateCollectionById = async (id: number, name: string) => {
     throw new Error("Error updating collection");
   }
 };
+
+export const createCollection = async (name: string, userId: string) => {
+  try {
+    return await apiClient.post("/collections", {
+      name: name,
+      user_id: userId,
+    });
+  } catch (error) {
+    throw new Error("Error creating collection");
+  }
+};

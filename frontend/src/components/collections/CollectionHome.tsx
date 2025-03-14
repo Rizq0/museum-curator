@@ -15,6 +15,7 @@ import { DeleteCollection } from "./DeleteCollection";
 import { EditCollection } from "./EditCollection";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "../utility/BackButton";
+import { CreateCollection } from "./CreateCollection";
 
 export const CollectionHome = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -113,6 +114,9 @@ export const CollectionHome = () => {
                 ))}
               </TableBody>
             </Table>
+            <div className="flex justify-center mt-4">
+              <CreateCollection />
+            </div>
           </div>
           <div className="flex justify-between w-full mt-4">
             {!isLoading && data && <BackButton />}

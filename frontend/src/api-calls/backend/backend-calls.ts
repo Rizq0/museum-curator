@@ -70,3 +70,11 @@ export const deleteCollectionById = async (id: number) => {
     throw new Error("Error deleting collection");
   }
 };
+
+export const updateCollectionById = async (id: number, name: string) => {
+  try {
+    return await apiClient.put(`/collections/${id}`, { name: name });
+  } catch (error) {
+    throw new Error("Error updating collection");
+  }
+};

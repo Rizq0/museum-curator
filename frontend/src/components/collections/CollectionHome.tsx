@@ -12,10 +12,14 @@ import { fetchCollections } from "../../api-calls/backend/backend-calls";
 import { useState, useEffect } from "react";
 import { PaginationOnly } from "../utility/PaginationOnly";
 import { DeleteCollection } from "./DeleteCollection";
+import { EditCollection } from "./EditCollection";
+import { useNavigate } from "react-router-dom";
+import { BackButton } from "../utility/BackButton";
 
 export const CollectionHome = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["collections", currentPage],
@@ -49,10 +53,11 @@ export const CollectionHome = () => {
           <LoaderIcon className="animate-spin self-center size-8" />
         </div>
       )}
+      {!isLoading && data && <BackButton />}
       {isError && <h1>Error</h1>}
       {data && (
         <>
-          <div className="w-full max-w-[650px] mx-auto mt-4">
+          <div className="w-full max-w-[650px] mx-auto">
             <Table className="mt-4">
               <TableHeader>
                 <TableRow className="dark:bg-dbuttonbg-pink bg-dbg-purple dark:hover:bg-dbuttonbg-pink  hover:bg-dbg-purple">
@@ -78,7 +83,7 @@ export const CollectionHome = () => {
                     <TableCell>{collection.user_id}</TableCell>
                     <TableCell
                       className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink"
-                      onClick={() => console.log(collection.id)}
+                      onClick={() => navigate(`/collection/${collection.id}`)}
                     >
                       {collection.name}
                     </TableCell>
@@ -91,11 +96,11 @@ export const CollectionHome = () => {
                         })
                         .replace(/\//g, "-")}
                     </TableCell>
-                    <TableCell
-                      className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink"
-                      onClick={() => console.log("handle edit")}
-                    >
-                      Edit
+                    <TableCell className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink">
+                      <EditCollection
+                        collectionId={collection.id}
+                        currentName={collection.name}
+                      />
                     </TableCell>
                     <TableCell className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink">
                       <DeleteCollection collectionId={collection.id} />
@@ -105,13 +110,16 @@ export const CollectionHome = () => {
               </TableBody>
             </Table>
           </div>
-          <PaginationOnly
-            previous={handlePreviousPage}
-            next={handleNextPage}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            totalPages={totalPages}
-          />
+          <div className="flex justify-between w-full mt-4">
+            {!isLoading && data && <BackButton />}
+            <PaginationOnly
+              previous={handlePreviousPage}
+              next={handleNextPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              totalPages={totalPages}
+            />
+          </div>
         </>
       )}
     </div>

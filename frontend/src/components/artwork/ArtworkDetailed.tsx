@@ -1,10 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getHarvardArtById } from "../../api-calls/harvardart/harvardart-calls";
 import { getClevelandArtById } from "../../api-calls/clevelandart/clevelandart-calls";
 import { LoaderIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import { HarvardArtworkDisplay } from "../artwork/HarvardArtworkDisplay";
 import { ClevelandArtworkDisplay } from "../artwork/ClevelandArtworkDisplay";
 import {
@@ -14,10 +13,10 @@ import {
   deleteArtworkFromCollection,
 } from "../../api-calls/backend/backend-calls";
 import toast from "react-hot-toast";
+import { BackButton } from "../utility/BackButton";
 
 export const ArtworkDetailed = () => {
   let { gallery, id } = useParams();
-  const navigate = useNavigate();
   const [isFavourite, setIsFavourite] = useState(false);
   const [isAddingToFavourites, setIsAddingToFavourites] = useState(false);
   const [isRemovingFromFavourites, setIsRemovingFromFavourites] =
@@ -71,10 +70,6 @@ export const ArtworkDetailed = () => {
       setIsFavourite(false);
     }
   }, [isFavouriteData]);
-
-  const handleBack = () => {
-    navigate(-1);
-  };
 
   const handleAddToFavourites = (selectedCollectionId: number) => {
     if (!id || !gallery) {
@@ -171,16 +166,7 @@ export const ArtworkDetailed = () => {
       <h1 className="text-3xl">Artwork Detailed</h1>
 
       {((gallery === "harvard" && !harvardLoad) ||
-        (gallery === "cleveland" && !clevelandLoad)) && (
-        <div className="flex justify-start w-full">
-          <Button
-            className="bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0 cursor-pointer mt-4"
-            onClick={handleBack}
-          >
-            BACK
-          </Button>
-        </div>
-      )}
+        (gallery === "cleveland" && !clevelandLoad)) && <BackButton />}
 
       {(harvardLoad || clevelandLoad) && (
         <div className="flex justify-center mt-4">
@@ -221,16 +207,7 @@ export const ArtworkDetailed = () => {
       )}
 
       {((gallery === "harvard" && !harvardLoad) ||
-        (gallery === "cleveland" && !clevelandLoad)) && (
-        <div className="flex justify-start w-full">
-          <Button
-            className="bg-dbg-purple text-dheadline-white hover:bg-dbuttonbg-pink hover:text-dbuttontext-dark dark:bg-dbuttonbg-pink dark:hover:bg-lbg-purple dark:text-dbuttontext-dark border-0 cursor-pointer mt-4"
-            onClick={handleBack}
-          >
-            BACK
-          </Button>
-        </div>
-      )}
+        (gallery === "cleveland" && !clevelandLoad)) && <BackButton />}
     </div>
   );
 };

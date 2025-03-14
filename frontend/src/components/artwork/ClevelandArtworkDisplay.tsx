@@ -28,7 +28,7 @@ export const ClevelandArtworkDisplay = ({
   const artData = artwork.data.data;
 
   return (
-    <div className="bg-lbg-purple dark:bg-dbg-purple border-dbg-purple dark:border-lbg-purple overflow-hidden mt-4">
+    <div className="bg-lbg-purple dark:bg-dbg-purple border-dbg-purple dark:border-lbg-purple overflow-hidden">
       {artData.images && artData.images.web ? (
         <div className="relative bg-lbg-purple dark:bg-dbg-purple flex justify-center mt-4">
           <img

@@ -28,7 +28,7 @@ export const HarvardArtworkDisplay = ({
   const artData = artwork.data;
 
   return (
-    <div className="bg-lbg-purple dark:bg-dbg-purple border-dbg-purple dark:border-lbg-purple overflow-hidden mt-4">
+    <div className="bg-lbg-purple dark:bg-dbg-purple border-dbg-purple dark:border-lbg-purple overflow-hidden">
       {artData.primaryimageurl ? (
         <div className="relative bg-lbg-purple dark:bg-dbg-purple flex justify-center mt-4">
           <img

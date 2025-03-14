@@ -33,6 +33,7 @@ const Favourite = sequelize.define(
 
 FavouriteList.hasMany(Favourite, {
   foreignKey: "favourite_list_id",
+  onDelete: "CASCADE",
 });
 Favourite.belongsTo(FavouriteList, {
   foreignKey: "favourite_list_id",

@@ -97,13 +97,17 @@ export const CollectionHome = () => {
                         .replace(/\//g, "-")}
                     </TableCell>
                     <TableCell className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink">
-                      <EditCollection
-                        collectionId={collection.id}
-                        currentName={collection.name}
-                      />
+                      <div className="flex justify-center">
+                        <EditCollection
+                          collectionId={collection.id}
+                          currentName={collection.name}
+                        />
+                      </div>
                     </TableCell>
                     <TableCell className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink">
-                      <DeleteCollection collectionId={collection.id} />
+                      <div className="flex justify-center">
+                        <DeleteCollection collectionId={collection.id} />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

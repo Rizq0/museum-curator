@@ -3,8 +3,6 @@ import { getHarvardArtById } from "../api-calls/harvardart/harvardart-calls";
 import { getClevelandArtById } from "../api-calls/clevelandart/clevelandart-calls";
 import { fetchArtworksByCollectionId } from "../api-calls/backend/backend-calls";
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export interface CollectionArtwork {
   id: number;
   artwork_id: number | string;

@@ -5,6 +5,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Homepage } from "./components/homepage/Homepage";
 import { Toaster } from "react-hot-toast";
 import { CollectionHome } from "./components/collections/CollectionHome";
+import { CollectionDetailed } from "./components/collections/CollectionDetailed";
 
 function App() {
   return (
@@ -16,6 +17,10 @@ function App() {
           <Route path="/homepage/:gallery/:page" element={<Homepage />} />
           <Route path="/artwork/:gallery/:id" element={<ArtworkDetailed />} />
           <Route path="/collections" element={<CollectionHome />} />
+          <Route
+            path="/collection/:collection"
+            element={<CollectionDetailed />}
+          />
         </Routes>
       </Layout>
     </>

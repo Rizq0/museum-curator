@@ -31,6 +31,7 @@ export const DeleteCollection = ({ collectionId }: DeleteCollectionProps) => {
           queryClient.invalidateQueries({
             queryKey: ["isFavourite"],
           });
+          queryClient.invalidateQueries({ queryKey: ["collectionArtworks"] });
           setIsDeleting(false);
           setOpen(false);
           return "Collection deleted!";

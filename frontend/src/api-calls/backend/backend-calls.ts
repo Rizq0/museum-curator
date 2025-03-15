@@ -89,3 +89,11 @@ export const createCollection = async (name: string, userId: string) => {
     throw new Error("Error creating collection");
   }
 };
+
+export const fetchArtworksByCollectionId = async (id: number, page: number) => {
+  try {
+    return await apiClient.get(`/collections/${id}/artworks?page=${page}`);
+  } catch (error) {
+    throw new Error("Error fetching artworks by collection id");
+  }
+};

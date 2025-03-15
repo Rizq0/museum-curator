@@ -27,6 +27,7 @@ export const CreateCollection = () => {
         loading: "Creating collection...",
         success: () => {
           queryClient.invalidateQueries({ queryKey: ["collections"] });
+          queryClient.invalidateQueries({ queryKey: ["collectionArtworks"] });
           setIsCreating(false);
           setOpen(false);
           return "Collection created!";

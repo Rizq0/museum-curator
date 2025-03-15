@@ -118,16 +118,19 @@ export const CollectionHome = () => {
               <CreateCollection />
             </div>
           </div>
-          <div className="flex justify-between w-full mt-4">
-            {!isLoading && data && <BackButton />}
-            <PaginationOnly
-              previous={handlePreviousPage}
-              next={handleNextPage}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              totalPages={totalPages}
-            />
-          </div>
+
+          {!isLoading && data && (
+            <div className="flex justify-between w-full mt-4">
+              <BackButton />
+              <PaginationOnly
+                previous={handlePreviousPage}
+                next={handleNextPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                totalPages={totalPages}
+              />{" "}
+            </div>
+          )}
         </>
       )}
     </div>

@@ -76,6 +76,10 @@ export const HarvardArtworkDisplay = ({
           {artData.copyright && (
             <DetailItem label="Copyright" value={artData.copyright} />
           )}
+
+          {artData.url && (
+            <DetailLink label="Harvard Art Museum URL:" value={artData.url} />
+          )}
         </div>
 
         {artData.description && (
@@ -119,5 +123,21 @@ const DetailItem = ({ label, value }: DetailItemProps) => (
       {label}
     </h3>
     <p className="mt-1 text-dheadline-white dark:text-dbg-purple">{value}</p>
+  </div>
+);
+
+const DetailLink = ({ label, value }: DetailItemProps) => (
+  <div>
+    <h3 className="text-sm font-medium text-dheadline-white dark:text-dbg-purple">
+      {label}
+    </h3>
+    <a
+      href={value}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-1 text-dheadline-white dark:text-dbg-purple break-words break-all"
+    >
+      {value}
+    </a>
   </div>
 );

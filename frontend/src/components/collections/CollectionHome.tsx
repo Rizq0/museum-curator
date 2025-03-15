@@ -128,7 +128,7 @@ export const CollectionHome = () => {
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 totalPages={totalPages}
-              />{" "}
+              />
             </div>
           )}
         </>

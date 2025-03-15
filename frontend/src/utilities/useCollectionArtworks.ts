@@ -79,6 +79,8 @@ export const useCollectionArtworks = (
   return useQuery({
     queryKey: ["collectionArtworks", collectionId, page],
     queryFn: fetchArtworks,
-    enabled: !!collectionId || !!page,
+    enabled: !!collectionId && !!page,
+    staleTime: 0,
+    gcTime: 0,
   });
 };

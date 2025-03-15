@@ -51,7 +51,12 @@ export const ArtworkCard = ({
           </h1>
           {currentGallery === "harvard" && <h2>{artwork.dated}</h2>}
           {currentGallery === "cleveland" && <h2>{artwork.creation_date}</h2>}
-          <h2 className="text-sm text-center">Click for more details!</h2>
+          {currentGallery === "harvard" && (
+            <h2 className="text-sm text-center">Harvard Art Museum</h2>
+          )}
+          {currentGallery === "cleveland" && (
+            <h2 className="text-sm text-center">Cleveland Art Museum</h2>
+          )}
           <img
             className="w-64 h-64 object-cover rounded-lg mt-2"
             src={getImageUrl()}

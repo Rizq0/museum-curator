@@ -19,43 +19,57 @@ export const useCollectionArtworks = (
   collectionId: string | number,
   page: number
 ) => {
-  console.log(collectionId, page);
   const fetchArtworks = async () => {
     try {
       const artworks = await fetchArtworksByCollectionId(
         Number(collectionId),
         Number(page)
       );
-      console.log(artworks);
       const pagination = artworks.data.pagination;
-      const processedArtworks: ProcessedArtwork[] = await Promise.all(
-        artworks.data.data.map(async (artwork: CollectionArtwork) => {
-          if (artwork.gallery === "harvard") {
-            try {
-              const artworkData = await getHarvardArtById(
-                Number(artwork.artwork_id)
-              );
-              return { gallery: artwork.gallery, data: artworkData };
-            } catch (error) {
-              console.log(error);
-              return null;
-            }
-          } else if (artwork.gallery === "cleveland") {
-            try {
-              const artworkData = await getClevelandArtById(
-                Number(artwork.artwork_id)
-              );
-              return { gallery: artwork.gallery, data: artworkData };
-            } catch (error) {
-              console.log(error);
-              return null;
-            }
-          } else {
+
+      const harvardArtworks = artworks.data.data.filter(
+        (artwork: CollectionArtwork) => artwork.gallery === "harvard"
+      );
+
+      const harvardArtworkProcessed = await Promise.all(
+        harvardArtworks.map(async (artwork: CollectionArtwork) => {
+          try {
+            const artworkData = await getHarvardArtById(
+              Number(artwork.artwork_id)
+            );
+            return { gallery: artwork.gallery, data: artworkData };
+          } catch (error) {
+            console.log(error);
             return null;
           }
         })
       );
-      return { data: processedArtworks, pagination: pagination };
+
+      const clevelandArtworks = artworks.data.data.filter(
+        (artwork: CollectionArtwork) => artwork.gallery === "cleveland"
+      );
+
+      const clevelandResults = [];
+      for (const artwork of clevelandArtworks) {
+        try {
+          const artworkData = await getClevelandArtById(
+            Number(artwork.artwork_id)
+          );
+          clevelandResults.push({
+            gallery: artwork.gallery,
+            data: artworkData,
+          });
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
+      }
+
+      const processedArtworks = [
+        ...harvardArtworkProcessed,
+        ...clevelandResults,
+      ];
+      return { data: processedArtworks, pagination };
     } catch (error) {
       console.error("Error fetching collection artworks:", error);
       throw error;

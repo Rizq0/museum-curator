@@ -9,7 +9,7 @@ const apiClient = axios.create({
   },
 });
 
-export const getHarvardArt = async (page: number) => {
+export const getHarvardArt = async (page: number, queryString: string) => {
   try {
     return await apiClient.get("/object", {
       params: {
@@ -17,6 +17,7 @@ export const getHarvardArt = async (page: number) => {
         page: page,
         sort: "id",
         order: "asc",
+        q: queryString,
       },
     });
   } catch (error) {

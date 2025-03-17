@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { getHarvardArt } from "../../api-calls/harvardart/harvardart-calls";
@@ -9,22 +9,40 @@ import { ArtworkCard } from "../artwork/ArtworkCard";
 
 export const Homepage = () => {
   let { page, gallery } = useParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(Number(page));
-  const [currentGallery, setCurrentGallery] = useState(gallery);
+
+  const [currentPage, setCurrentPage] = useState(() => Number(page) || 1);
+  const [currentGallery, setCurrentGallery] = useState(
+    () => gallery || "cleveland"
+  );
   const [totalPages, setTotalPages] = useState(0);
 
+  const initialQuery = searchParams.get("q") || "";
+  const [queryString, setQueryString] = useState(initialQuery);
+  const [submittedQuery, setSubmittedQuery] = useState(initialQuery);
+
   useEffect(() => {
-    navigate(`/homepage/${currentGallery}/${currentPage}`);
-  }, [currentPage, currentGallery]);
+    const newSearch = new URLSearchParams(searchParams);
+
+    if (submittedQuery) {
+      newSearch.set("q", submittedQuery);
+    } else {
+      newSearch.delete("q");
+    }
+
+    navigate(
+      `/homepage/${currentGallery}/${currentPage}?${newSearch.toString()}`
+    );
+  }, [currentPage, currentGallery, submittedQuery]);
 
   const {
     data: harvardAll,
     isLoading: harvardLoad,
     error: harvardError,
   } = useQuery({
-    queryKey: ["harvardArt", page],
-    queryFn: () => getHarvardArt(Number(page)),
+    queryKey: ["harvardArt", page, submittedQuery],
+    queryFn: () => getHarvardArt(Number(page), submittedQuery),
     enabled: gallery === "harvard",
   });
 
@@ -33,8 +51,8 @@ export const Homepage = () => {
     isLoading: clevelandLoad,
     error: clevelandError,
   } = useQuery({
-    queryKey: ["clevelandArt", page],
-    queryFn: () => getClevelandArt(Number(page)),
+    queryKey: ["clevelandArt", page, submittedQuery],
+    queryFn: () => getClevelandArt(Number(page), submittedQuery),
     enabled: gallery === "cleveland",
   });
 
@@ -44,6 +62,11 @@ export const Homepage = () => {
 
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
+  };
+
+  const handleSearch = () => {
+    setSubmittedQuery(queryString);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -68,6 +91,9 @@ export const Homepage = () => {
           totalPages={totalPages}
           currentPage={currentPage}
           currentGallery={currentGallery || ""}
+          queryString={queryString}
+          setQueryString={setQueryString}
+          handleSearch={handleSearch}
         />
       )}
       {(harvardLoad || clevelandLoad) && (
@@ -115,6 +141,9 @@ export const Homepage = () => {
           totalPages={totalPages}
           currentPage={currentPage}
           currentGallery={currentGallery || ""}
+          queryString={queryString}
+          setQueryString={setQueryString}
+          handleSearch={handleSearch}
         />
       )}
     </div>

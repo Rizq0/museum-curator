@@ -5,7 +5,7 @@ const apiClient = axios.create({
   timeout: 1000,
 });
 
-export const getClevelandArt = async (page: number) => {
+export const getClevelandArt = async (page: number, queryString: string) => {
   const limit = 15;
   const skip = (page - 1) * limit;
   try {
@@ -13,6 +13,7 @@ export const getClevelandArt = async (page: number) => {
       params: {
         skip: skip,
         limit: limit,
+        q: queryString,
       },
     });
   } catch (error) {

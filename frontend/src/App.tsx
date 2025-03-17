@@ -21,6 +21,7 @@ function App() {
             path="/collection/:collection"
             element={<CollectionDetailed />}
           />
+          <Route path="*" element={<Navigate to="/homepage/cleveland/1" />} />
         </Routes>
       </Layout>
     </>

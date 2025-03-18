@@ -4,7 +4,7 @@ A web application for curating and exploring museum artwork collections.
 
 ## Project Overview
 
-Museum Curator allows users to browse artwork collections from various museums, create personal collections, and manage their favorite pieces. The application provides an intuitive interface for art enthusiasts to discover and organize artworks.
+Museum Curator allows users to browse artwork collections from various museums, create personal collections, and manage their favourite pieces. The application provides an intuitive interface for art enthusiasts to discover and organize artworks.
 
 ## GIF TO BE ADDED HERE
 
@@ -112,11 +112,11 @@ The frontend will be available at `http://localhost:5173`.
 
 ## Usage
 
-1. Browse the both the harvard and cleveland galleries to explore artworks.
+1. Browse both the harvard and cleveland galleries to explore artworks.
 2. Click on artworks to see a more detailed view.
 3. Add artworks to your collections.
 4. Delete artworks from your collections.
-5. Create, edit and delete a personal collection.
+5. Create, edit, and delete a personal collection.
 6. View individual collections with all the added artworks.
 
 ## Development
@@ -143,7 +143,7 @@ The backend is currently hosted on Render: [https://museum-curator-api.onrender.
 
 Be aware there could be a 50-second delay as Render spins down instances that are unused. This will create an error when the web application tries to fetch data from the hosted backend.
 
-Database does not persist across restarts, this is due to the project being an MVP. Instead, production data is reseeded after every restart.
+The database does not persist across restarts, this is due to the project being an Demo/MVP. Instead, production data is reseeded after every restart.
 
 ### Frontend
 
@@ -151,10 +151,10 @@ TBD
 
 ## Challenges & Solutions
 
-- **Cold Start Delays**: The free tier on Render has cold start issues. Solution: Implemented loading states and error handling in the frontend.
+- **Cold Start Delays**: The free tier on Render has cold start issues. Solution: I implemented loading states and error handling in the frontend.
 - **Database Persistence**: Using SQLite with reseeding for the MVP phase. Future versions would implement a persistent database solution.
 - **Cleveland API**: There is a rate limit with the Cleveland API, meaning I had to use sequential processing for Cleveland API and parallel processing for Harvard API.
-- **Lack of Authentication**: The current MVP/Demo has a hardcoded user of "1" used throughout. Future versions would implement user authentication.
+- **Lack of Authentication**: The current MVP/Demo uses a hardcoded user ID "1" used throughout. Future versions would implement user authentication.
 
 ## Future Improvements
 

@@ -6,6 +6,7 @@ import { getClevelandArt } from "../../api-calls/clevelandart/clevelandart-calls
 import { PageControls } from "../utility/PageControls";
 import { LoaderIcon } from "lucide-react";
 import { ArtworkCard } from "../artwork/ArtworkCard";
+import { ApiError, NoResultsError } from "../error/ApiErrors";
 
 export const Homepage = () => {
   let { page, gallery } = useParams();
@@ -13,8 +14,8 @@ export const Homepage = () => {
   const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(() => Number(page) || 1);
-  const [currentGallery, setCurrentGallery] = useState(
-    () => gallery || "cleveland"
+  const [currentGallery, setCurrentGallery] = useState(() =>
+    gallery === "harvard" || gallery === "cleveland" ? gallery : "cleveland"
   );
   const [totalPages, setTotalPages] = useState(0);
 
@@ -40,6 +41,7 @@ export const Homepage = () => {
     data: harvardAll,
     isLoading: harvardLoad,
     error: harvardError,
+    refetch: refetchHarvard,
   } = useQuery({
     queryKey: ["harvardArt", page, submittedQuery],
     queryFn: () => getHarvardArt(Number(page), submittedQuery),
@@ -50,6 +52,7 @@ export const Homepage = () => {
     data: clevelandAll,
     isLoading: clevelandLoad,
     error: clevelandError,
+    refetch: refetchCleveland,
   } = useQuery({
     queryKey: ["clevelandArt", page, submittedQuery],
     queryFn: () => getClevelandArt(Number(page), submittedQuery),
@@ -69,14 +72,41 @@ export const Homepage = () => {
     setCurrentPage(1);
   };
 
+  const handleRetry = () => {
+    if (gallery === "harvard") {
+      refetchHarvard();
+    }
+    if (gallery === "cleveland") {
+      refetchCleveland();
+    }
+  };
+
   useEffect(() => {
     if (gallery === "harvard" && harvardAll) {
-      setTotalPages(harvardAll.data.info.pages);
+      const maxPages = Math.ceil(harvardAll.data.info.pages);
+      setTotalPages(maxPages);
+
+      if (currentPage > maxPages && maxPages > 0) {
+        setCurrentPage(maxPages);
+      }
+
+      if (currentPage < 1) {
+        setCurrentPage(1);
+      }
     }
+
     if (gallery === "cleveland" && clevelandAll) {
-      setTotalPages(Math.ceil(clevelandAll.data.info.total / 15));
+      const maxPages = Math.ceil(clevelandAll.data.info.total / 15);
+      setTotalPages(maxPages);
+
+      if (currentPage > maxPages && maxPages > 0) {
+        setCurrentPage(maxPages);
+      }
+      if (currentPage < 1) {
+        setCurrentPage(1);
+      }
     }
-  }, [harvardAll, clevelandAll, gallery]);
+  }, [harvardAll, clevelandAll, currentPage]);
 
   return (
     <div className="flex flex-col items-center">
@@ -95,39 +125,55 @@ export const Homepage = () => {
           handleSearch={handleSearch}
         />
       )}
+
       {(harvardLoad || clevelandLoad) && (
         <div className="flex justify-center mt-4">
           <LoaderIcon className="animate-spin self-center size-8" />
         </div>
       )}
+
       {(harvardError || clevelandError) && (
-        <h1 className="mt-4">Error fetching Artwork</h1>
+        <ApiError
+          message="Error Fetching Data"
+          details={harvardError?.message || clevelandError?.message}
+          onRetry={handleRetry}
+          className="mt-16 mb-16"
+        />
       )}
+
       {gallery === "harvard" && harvardAll && (
         <div className="mt-4">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {harvardAll.data.records.map((art: any) => (
-              <ArtworkCard
-                key={art.id}
-                artwork={art}
-                currentGallery={currentGallery || ""}
-              />
-            ))}
-          </ul>
+          {harvardAll.data.records.length > 0 ? (
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {harvardAll.data.records.map((art: any) => (
+                <ArtworkCard
+                  key={art.id}
+                  artwork={art}
+                  currentGallery={currentGallery || ""}
+                />
+              ))}
+            </ul>
+          ) : (
+            <NoResultsError query={submittedQuery} className="mt-16 mb-16" />
+          )}
         </div>
       )}
 
       {gallery === "cleveland" && clevelandAll && (
         <div className="mt-4">
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {clevelandAll.data.data.map((art: any) => (
-              <ArtworkCard
-                key={art.id}
-                artwork={art}
-                currentGallery={currentGallery || ""}
-              />
-            ))}
-          </ul>
+          {clevelandAll.data.data.length > 0 ? (
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {clevelandAll.data.data.map((art: any) => (
+                <ArtworkCard
+                  key={art.id}
+                  artwork={art}
+                  currentGallery={currentGallery || ""}
+                />
+              ))}
+            </ul>
+          ) : (
+            <NoResultsError query={submittedQuery} className="mt-16 mb-16" />
+          )}
         </div>
       )}
       {((gallery === "harvard" && !harvardLoad) ||

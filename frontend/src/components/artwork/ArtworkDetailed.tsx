@@ -165,8 +165,6 @@ export const ArtworkDetailed = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-3xl">Artwork Detailed</h1>
-
       {((gallery === "harvard" && !harvardLoad) ||
         (gallery === "cleveland" && !clevelandLoad)) && <BackButton />}
 

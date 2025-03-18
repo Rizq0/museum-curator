@@ -48,7 +48,6 @@ export const CollectionHome = () => {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <h1 className="text-3xl">Collections</h1>
       {isLoading && (
         <div className="flex justify-center mt-4">
           <LoaderIcon className="animate-spin self-center size-8" />

@@ -36,7 +36,6 @@ export const CollectionDetailed = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-3xl">Collection Detailed</h1>
       {isLoading && (
         <div className="flex justify-center mt-4">
           <LoaderIcon className="animate-spin self-center size-8" />

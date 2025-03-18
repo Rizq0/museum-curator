@@ -80,7 +80,6 @@ export const Homepage = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-3xl">Homepage</h1>
       {((gallery === "harvard" && !harvardLoad) ||
         (gallery === "cleveland" && !clevelandLoad)) && (
         <PageControls

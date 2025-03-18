@@ -21,7 +21,6 @@ export const ArtworkCard = ({
   artwork: Artwork;
   currentGallery: string;
 }) => {
-  const basename = import.meta.env.DEV ? "" : "/museum-curator";
   const navigate = useNavigate();
   const getImageUrl = () => {
     switch (currentGallery) {
@@ -35,7 +34,7 @@ export const ArtworkCard = ({
   };
 
   const handleClick = () => {
-    navigate(`${basename}/artwork/${currentGallery}/${artwork.id}`);
+    navigate(`/artwork/${currentGallery}/${artwork.id}`);
   };
 
   return (

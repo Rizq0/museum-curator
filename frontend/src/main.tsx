@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./index.css";
 import App from "./App.tsx";
 
-const basename = import.meta.env.DEV ? "/" : "/museum-curator/";
+const basename = import.meta.env.DEV ? "/" : "/museum-curator";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

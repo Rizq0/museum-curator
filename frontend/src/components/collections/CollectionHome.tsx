@@ -19,7 +19,6 @@ import { CreateCollection } from "./CreateCollection";
 import { RetryError } from "../error/Errors";
 
 export const CollectionHome = () => {
-  const basename = import.meta.env.DEV ? "" : "/museum-curator";
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
@@ -103,9 +102,7 @@ export const CollectionHome = () => {
                     <TableCell>{collection.user_id}</TableCell>
                     <TableCell
                       className="cursor-pointer dark:hover:bg-lbg-purple dark:hover:text-dbg-purple hover:bg-dbuttonbg-pink"
-                      onClick={() =>
-                        navigate(`${basename}/collection/${collection.id}`)
-                      }
+                      onClick={() => navigate(`/collection/${collection.id}`)}
                     >
                       {collection.name}
                     </TableCell>

@@ -48,7 +48,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   };
 
   const handleFavourites = () => {
-    navigate("/collections");
+    navigate("collections");
   };
 
   return (

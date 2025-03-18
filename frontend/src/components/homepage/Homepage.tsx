@@ -9,6 +9,7 @@ import { ArtworkCard } from "../artwork/ArtworkCard";
 import { RetryError, HomepageNoResultsError } from "../error/Errors";
 
 export const Homepage = () => {
+  const basename = import.meta.env.DEV ? "" : "/museum-curator";
   let { page, gallery } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export const Homepage = () => {
     }
 
     navigate(
-      `/homepage/${currentGallery}/${currentPage}?${newSearch.toString()}`
+      `${basename}/homepage/${currentGallery}/${currentPage}?${newSearch.toString()}`
     );
   }, [currentPage, currentGallery, submittedQuery]);
 

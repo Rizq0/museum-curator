@@ -112,7 +112,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                 <IconBrandGithub height={48} width={48} />
               </a>
               <a
-                href="https://github.com/Rizq0"
+                href="https://www.linkedin.com/in/joe-brown0/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
@@ -120,7 +120,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                 <IconBrandLinkedin height={48} width={48} />
               </a>
               <a
-                href="https://github.com/Rizq0"
+                href="https://joedev.co.uk/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"

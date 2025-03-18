@@ -5,7 +5,7 @@ const apiClient = axios.create({
   baseURL:
     import.meta.env.MODE === "development"
       ? "/harvard"
-      : "https://museum-curator-api.onrender.com/api",
+      : "https://api.harvardartmuseums.org",
   timeout: 1000,
   params: {
     apikey: apiKey,

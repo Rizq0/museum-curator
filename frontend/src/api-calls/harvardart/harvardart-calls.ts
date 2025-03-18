@@ -2,7 +2,10 @@ import axios from "axios";
 const apiKey = "f107d8d0-3810-4090-857b-318e50860289"; // this is a public key, backend proxy not needed for development purposes
 
 const apiClient = axios.create({
-  baseURL: "https://api.harvardartmuseums.org",
+  baseURL:
+    import.meta.env.MODE === "development"
+      ? "/harvard"
+      : "https://museum-curator-api.onrender.com/api",
   timeout: 1000,
   params: {
     apikey: apiKey,

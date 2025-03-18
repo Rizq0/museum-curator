@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "/cleveland",
+  baseURL:
+    import.meta.env.MODE === "development"
+      ? "/cleveland"
+      : "https://openaccess-api.clevelandart.org/api",
   timeout: 1000,
 });
 

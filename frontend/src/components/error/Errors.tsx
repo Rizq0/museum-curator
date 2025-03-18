@@ -9,6 +9,17 @@ interface ApiErrorProps {
   className?: string;
 }
 
+interface NoResultsErrorProps {
+  query?: string;
+  className?: string;
+}
+
+interface GeneralErrorProps {
+  mainMessage: string;
+  message?: string;
+  className?: string;
+}
+
 export const HomepageApiError: React.FC<ApiErrorProps> = ({
   message = "Error Fetching Data",
   details = null,
@@ -41,10 +52,10 @@ export const HomepageApiError: React.FC<ApiErrorProps> = ({
   );
 };
 
-export const HomepageNoResultsError: React.FC<{
-  query?: string;
-  className?: string;
-}> = ({ query = "", className = "" }) => {
+export const HomepageNoResultsError: React.FC<NoResultsErrorProps> = ({
+  query = "",
+  className = "",
+}) => {
   return (
     <div
       className={`flex flex-col items-center justify-center space-y-4 ${className}`}
@@ -70,11 +81,11 @@ export const HomepageNoResultsError: React.FC<{
   );
 };
 
-export const GeneralError: React.FC<{
-  mainMessage: string;
-  message?: string;
-  className?: string;
-}> = ({ mainMessage = "", message = "", className = "" }) => {
+export const GeneralError: React.FC<GeneralErrorProps> = ({
+  mainMessage = "",
+  message = "",
+  className = "",
+}) => {
   return (
     <div
       className={`flex flex-col items-center justify-center space-y-4 ${className}`}

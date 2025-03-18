@@ -81,7 +81,8 @@ export const CollectionDetailed = () => {
           </ul>
         </div>
       ) : (
-        <HomepageNoResultsError query="" className="mt-16 mb-16" />
+        !isLoading &&
+        data && <HomepageNoResultsError query="" className="mt-16 mb-16" />
       )}
       {!isLoading && data && (
         <div className="flex justify-between w-full mt-4">

@@ -142,7 +142,7 @@ export const Homepage = () => {
       )}
 
       {gallery === "harvard" && harvardAll && (
-        <div className="mt-4">
+        <div className="mt-4 mb-4">
           {harvardAll.data.records.length > 0 ? (
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {harvardAll.data.records.map((art: any) => (
@@ -163,7 +163,7 @@ export const Homepage = () => {
       )}
 
       {gallery === "cleveland" && clevelandAll && (
-        <div className="mt-4">
+        <div className="mt-4 mb-4">
           {clevelandAll.data.data.length > 0 ? (
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {clevelandAll.data.data.map((art: any) => (

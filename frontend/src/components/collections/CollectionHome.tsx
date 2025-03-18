@@ -54,7 +54,18 @@ export const CollectionHome = () => {
           <LoaderIcon className="animate-spin self-center size-8" />
         </div>
       )}
-      {!isLoading && data && <BackButton />}
+      {!isLoading && data && (
+        <div className="flex justify-between w-full mt-4">
+          <BackButton />
+          <PaginationOnly
+            previous={handlePreviousPage}
+            next={handleNextPage}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
+        </div>
+      )}
       {isError && (
         <RetryError
           message="Error Loading Collections"

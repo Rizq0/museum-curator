@@ -5,6 +5,9 @@ import {
   IconMoonStars,
   IconHome,
   IconHeart,
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconListDetails,
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
@@ -86,10 +89,47 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             )}
           </div>
         </header>
+        <hr className="w-full bg-dbg-purple dark:bg-dbuttonbg-pink h-[4px] mt-8 mb-8 rounded" />
 
         <main className="flex-grow">{children}</main>
 
-        <footer className="w-full text-center py-4">FOOTER</footer>
+        <hr className="w-full bg-dbg-purple dark:bg-dbuttonbg-pink h-[4px] mt-8 mb-8 rounded" />
+        <footer className="w-full text-center py-4">
+          <div className="flex flex-row justify-center sm:justify-between items-center flex-wrap gap-4">
+            <div className="flex flex-col justify-between items-center bg-dbg-purple dark:bg-dbuttonbg-pink text-lbuttonbg-white dark:text-dbg-purple rounded p-2">
+              <h1 className="text-lg font-semibold">
+                Museum Curator - Freelance Demo / MVP
+              </h1>
+              <h1 className="text-lg font-semibold">Created By Joe Brown</h1>
+            </div>
+            <div className="flex flex-row justify-between items-center gap-4">
+              <a
+                href="https://github.com/Rizq0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
+              >
+                <IconBrandGithub height={48} width={48} />
+              </a>
+              <a
+                href="https://github.com/Rizq0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
+              >
+                <IconBrandLinkedin height={48} width={48} />
+              </a>
+              <a
+                href="https://github.com/Rizq0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
+              >
+                <IconListDetails height={48} width={48} />
+              </a>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );

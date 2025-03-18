@@ -20,6 +20,10 @@ interface GeneralErrorProps {
   className?: string;
 }
 
+interface NotFoundPageProps {
+  className?: string;
+}
+
 export const RetryError: React.FC<ApiErrorProps> = ({
   message = "Error Fetching Data",
   details = null,
@@ -106,6 +110,26 @@ export const GeneralError: React.FC<GeneralErrorProps> = ({
           There has been an error, please try again.
         </p>
       )}
+    </div>
+  );
+};
+
+export const NotFoundPage: React.FC<NotFoundPageProps> = ({
+  className = "",
+}) => {
+  return (
+    <div
+      className={`flex flex-col items-center justify-center space-y-4 ${className}`}
+    >
+      <div className="bg-dbg-purple dark:bg-dbuttonbg-pink rounded-full p-4">
+        <AlertTriangle size={64} className="text-red-500 w-16 h-16" />
+      </div>
+      <h3 className="text-2xl text-dbg-purple dark:text-dbuttonbg-pink">
+        Page Not Found
+      </h3>
+      <p className="text-lg text-dbg-purple dark:text-dbuttonbg-pink mt-2">
+        The page you are looking for does not exist.
+      </p>
     </div>
   );
 };

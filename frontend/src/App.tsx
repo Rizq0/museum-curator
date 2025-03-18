@@ -6,6 +6,7 @@ import { Homepage } from "./components/homepage/Homepage";
 import { Toaster } from "react-hot-toast";
 import { CollectionHome } from "./components/collections/CollectionHome";
 import { CollectionDetailed } from "./components/collections/CollectionDetailed";
+import { NotFoundPage } from "./components/error/Errors";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
             path="/collection/:collection"
             element={<CollectionDetailed />}
           />
-          <Route path="*" element={<Navigate to="/homepage/cleveland/1" />} />
+          <Route path="*" element={<NotFoundPage className="mt-16 mb-16" />} />
         </Routes>
       </Layout>
     </>

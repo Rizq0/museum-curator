@@ -5,12 +5,13 @@ import { LoaderIcon } from "lucide-react";
 import { ArtworkCard } from "../artwork/ArtworkCard";
 import { BackButton } from "../utility/BackButton";
 import { PaginationOnly } from "../utility/PaginationOnly";
+import { RetryError, HomepageNoResultsError } from "../error/Errors";
 
 export const CollectionDetailed = () => {
   const { collection } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const { data, isLoading, error } = useCollectionArtworks(
+  const { data, isLoading, error, refetch } = useCollectionArtworks(
     collection || "",
     currentPage
   );
@@ -41,7 +42,14 @@ export const CollectionDetailed = () => {
           <LoaderIcon className="animate-spin self-center size-8" />
         </div>
       )}
-      {error && <h1>Error fetching collection</h1>}
+      {error && (
+        <RetryError
+          message="Error Fetching Collection"
+          details="Could not load collection details."
+          onRetry={() => refetch()}
+          className="mt-16 mb-16"
+        />
+      )}
 
       {!isLoading && data && (
         <div className="flex justify-between w-full mt-4">
@@ -56,7 +64,7 @@ export const CollectionDetailed = () => {
         </div>
       )}
 
-      {data && (
+      {data && data.data.length > 0 ? (
         <div className="mt-4">
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
             {data.data.map((art: any) => (
@@ -72,6 +80,8 @@ export const CollectionDetailed = () => {
             ))}
           </ul>
         </div>
+      ) : (
+        <HomepageNoResultsError query="" className="mt-16 mb-16" />
       )}
       {!isLoading && data && (
         <div className="flex justify-between w-full mt-4">

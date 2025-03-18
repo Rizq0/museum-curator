@@ -16,13 +16,14 @@ import { EditCollection } from "./EditCollection";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "../utility/BackButton";
 import { CreateCollection } from "./CreateCollection";
+import { RetryError } from "../error/Errors";
 
 export const CollectionHome = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["collections", currentPage],
     queryFn: () => fetchCollections(currentPage),
   });
@@ -54,7 +55,14 @@ export const CollectionHome = () => {
         </div>
       )}
       {!isLoading && data && <BackButton />}
-      {isError && <h1>Error</h1>}
+      {isError && (
+        <RetryError
+          message="Error Loading Collections"
+          details="Unable to fetch your collections at this time."
+          onRetry={() => refetch()}
+          className="mt-16 mb-16"
+        />
+      )}
       {data && (
         <>
           <div className="w-full max-w-[650px] mx-auto">

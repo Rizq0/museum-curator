@@ -14,6 +14,7 @@ import {
 } from "../../api-calls/backend/backend-calls";
 import toast from "react-hot-toast";
 import { BackButton } from "../utility/BackButton";
+import { RetryError } from "../error/Errors";
 
 export const ArtworkDetailed = () => {
   let { gallery, id } = useParams();
@@ -30,6 +31,7 @@ export const ArtworkDetailed = () => {
     data: harvardArt,
     isLoading: harvardLoad,
     error: harvardError,
+    refetch: harvardRefetch,
   } = useQuery({
     queryKey: ["harvardArt", id],
     queryFn: () => getHarvardArtById(Number(id)),
@@ -40,6 +42,7 @@ export const ArtworkDetailed = () => {
     data: clevelandArt,
     isLoading: clevelandLoad,
     error: clevelandError,
+    refetch: clevelandRefetch,
   } = useQuery({
     queryKey: ["clevelandArt", id],
     queryFn: () => getClevelandArtById(Number(id)),
@@ -59,6 +62,7 @@ export const ArtworkDetailed = () => {
     data: collectionData,
     isLoading: collectionLoading,
     error: collectionError,
+    refetch: collectionRefetch,
   } = useQuery({
     queryKey: ["collectionData", collectionId],
     queryFn: () => fetchCollectionById(collectionId ?? 0),
@@ -175,7 +179,14 @@ export const ArtworkDetailed = () => {
       )}
 
       {(harvardError || clevelandError) && (
-        <h1 className="mt-4">Error fetching Artwork</h1>
+        <RetryError
+          message="Error Fetching Artwork"
+          details={harvardError?.message || clevelandError?.message}
+          onRetry={() =>
+            gallery === "harvard" ? harvardRefetch() : clevelandRefetch()
+          }
+          className="mt-16 mb-16"
+        />
       )}
 
       {gallery === "harvard" && harvardArt && (
@@ -185,6 +196,7 @@ export const ArtworkDetailed = () => {
           collectionData={collectionData}
           collectionLoading={collectionLoading}
           collectionError={!!collectionError}
+          collectionRefetch={collectionRefetch}
           addToFavourites={handleAddToFavourites}
           removeFromFavourites={handleRemoveFromFavourites}
           isAddingToFavourites={isAddingToFavourites}
@@ -199,6 +211,7 @@ export const ArtworkDetailed = () => {
           collectionData={collectionData}
           collectionLoading={collectionLoading}
           collectionError={!!collectionError}
+          collectionRefetch={collectionRefetch}
           addToFavourites={handleAddToFavourites}
           removeFromFavourites={handleRemoveFromFavourites}
           isAddingToFavourites={isAddingToFavourites}

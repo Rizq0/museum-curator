@@ -8,6 +8,7 @@ type ClevelandArtworkDisplayProps = {
   collectionData: any;
   collectionLoading: boolean;
   collectionError: boolean;
+  collectionRefetch: () => void;
   addToFavourites: (selectedCollectionId: number) => void;
   removeFromFavourites: () => void;
   isAddingToFavourites?: boolean;
@@ -20,6 +21,7 @@ export const ClevelandArtworkDisplay = ({
   collectionData,
   collectionLoading,
   collectionError,
+  collectionRefetch,
   addToFavourites,
   removeFromFavourites,
   isAddingToFavourites = false,
@@ -99,6 +101,7 @@ export const ClevelandArtworkDisplay = ({
             collectionData={collectionData}
             collectionLoading={collectionLoading}
             collectionError={collectionError}
+            collectionRefetch={collectionRefetch}
             removeFromFavourites={removeFromFavourites}
             isRemovingFromFavourites={isRemovingFromFavourites}
           />

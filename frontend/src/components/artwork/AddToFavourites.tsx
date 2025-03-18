@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCollections } from "../../api-calls/backend/backend-calls";
 import { LoaderIcon } from "lucide-react";
 import { PaginationOnly } from "../utility/PaginationOnly";
+import { RetryError } from "../error/Errors";
 
 type AddToFavouritesProps = {
   addToFavourites: (collectionId: number) => void;
@@ -37,6 +38,7 @@ export const AddToFavourites = ({
     data: collectionsData,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["userCollections", currentPage],
     queryFn: () => fetchCollections(currentPage),
@@ -105,12 +107,12 @@ export const AddToFavourites = ({
 
           {error && (
             <div className="py-4">
-              <p className="text-dbg-purple dark:text-lbuttonbg-white">
-                Failed to load collections
-              </p>
-              <p className="text-dbg-purple dark:text-lbuttonbg-white text-sm">
-                Please try again later
-              </p>
+              <RetryError
+                message="Error Fetching Collections"
+                details="Could not load your collections."
+                onRetry={() => refetch()}
+                className="mt-16 mb-16"
+              />
             </div>
           )}
 

@@ -20,7 +20,7 @@ interface GeneralErrorProps {
   className?: string;
 }
 
-export const HomepageApiError: React.FC<ApiErrorProps> = ({
+export const RetryError: React.FC<ApiErrorProps> = ({
   message = "Error Fetching Data",
   details = null,
   onRetry,

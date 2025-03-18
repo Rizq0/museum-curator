@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { LoaderIcon } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
+import { RetryError } from "../error/Errors";
 
 type RemoveFromFavouritesProps = {
   collectionData: any;
   collectionLoading: boolean;
   collectionError: boolean;
+  collectionRefetch: () => void;
   removeFromFavourites: () => void;
   isRemovingFromFavourites?: boolean;
 };
@@ -18,6 +20,7 @@ export const RemoveFromFavourites = ({
   collectionData,
   collectionLoading,
   collectionError,
+  collectionRefetch,
   removeFromFavourites,
   isRemovingFromFavourites = false,
 }: RemoveFromFavouritesProps) => {
@@ -69,12 +72,12 @@ export const RemoveFromFavourites = ({
 
           {collectionError && (
             <div className="py-4">
-              <p className="text-dbg-purple dark:text-lbuttonbg-white mb-2">
-                Error loading collection information
-              </p>
-              <p className="text-dbg-purple dark:text-lbuttonbg-white text-sm">
-                Please try again later
-              </p>
+              <RetryError
+                message="Error Fetching Collection"
+                details="Could not load collection information."
+                onRetry={() => collectionRefetch()}
+                className="mt-16 mb-16"
+              />
             </div>
           )}
 

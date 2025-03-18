@@ -6,7 +6,7 @@ import { getClevelandArt } from "../../api-calls/clevelandart/clevelandart-calls
 import { PageControls } from "../utility/PageControls";
 import { LoaderIcon } from "lucide-react";
 import { ArtworkCard } from "../artwork/ArtworkCard";
-import { HomepageApiError, HomepageNoResultsError } from "../error/Errors";
+import { RetryError, HomepageNoResultsError } from "../error/Errors";
 
 export const Homepage = () => {
   let { page, gallery } = useParams();
@@ -133,7 +133,7 @@ export const Homepage = () => {
       )}
 
       {(harvardError || clevelandError) && (
-        <HomepageApiError
+        <RetryError
           message="Error Fetching Data"
           details={harvardError?.message || clevelandError?.message}
           onRetry={handleRetry}

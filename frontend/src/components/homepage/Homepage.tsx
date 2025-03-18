@@ -6,7 +6,7 @@ import { getClevelandArt } from "../../api-calls/clevelandart/clevelandart-calls
 import { PageControls } from "../utility/PageControls";
 import { LoaderIcon } from "lucide-react";
 import { ArtworkCard } from "../artwork/ArtworkCard";
-import { ApiError, NoResultsError } from "../error/ApiErrors";
+import { HomepageApiError, HomepageNoResultsError } from "../error/Errors";
 
 export const Homepage = () => {
   let { page, gallery } = useParams();
@@ -133,7 +133,7 @@ export const Homepage = () => {
       )}
 
       {(harvardError || clevelandError) && (
-        <ApiError
+        <HomepageApiError
           message="Error Fetching Data"
           details={harvardError?.message || clevelandError?.message}
           onRetry={handleRetry}
@@ -154,7 +154,10 @@ export const Homepage = () => {
               ))}
             </ul>
           ) : (
-            <NoResultsError query={submittedQuery} className="mt-16 mb-16" />
+            <HomepageNoResultsError
+              query={submittedQuery}
+              className="mt-16 mb-16"
+            />
           )}
         </div>
       )}
@@ -172,7 +175,10 @@ export const Homepage = () => {
               ))}
             </ul>
           ) : (
-            <NoResultsError query={submittedQuery} className="mt-16 mb-16" />
+            <HomepageNoResultsError
+              query={submittedQuery}
+              className="mt-16 mb-16"
+            />
           )}
         </div>
       )}

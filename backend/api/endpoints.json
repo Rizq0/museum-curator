@@ -149,5 +149,14 @@
     "description": "Remove an artwork from a collection specified by collection_id",
     "example": "DELETE /api/collections/1/artworks/1",
     "response": {}
+  },
+  "GET /api/proxy/cleveland": {
+    "description": "Proxy to Cleveland Museum of Art API",
+    "fetch_all_artworks": {
+      "example": "GET /api/proxy/cleveland/artworks?skip=0&limit=15&q=japanese"
+    },
+    "fetch_artwork": {
+      "example": "GET /api/proxy/cleveland/artworks/94979"
+    }
   }
 }

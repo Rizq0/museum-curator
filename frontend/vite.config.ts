@@ -23,7 +23,7 @@ export default defineConfig(() => ({
         rewrite: (path) => path.replace(/^\/cleveland/, ""),
       },
       "/backend": {
-        target: "https://museum-curator-api.onrender.com/api",
+        target: "http://localhost:9090/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/backend/, ""),
       },

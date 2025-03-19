@@ -5,6 +5,7 @@ const apiClient = axios.create({
     import.meta.env.MODE === "development"
       ? "/cleveland"
       : "https://museum-curator-api.onrender.com/api/proxy/cleveland",
+  timeout: 5000,
 });
 
 export const getClevelandArt = async (page: number, queryString: string) => {

@@ -6,7 +6,7 @@ const apiClient = axios.create({
     import.meta.env.MODE === "development"
       ? "/harvard"
       : "https://api.harvardartmuseums.org",
-  timeout: 1000,
+  timeout: 5000,
   params: {
     apikey: apiKey,
   },

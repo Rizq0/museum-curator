@@ -5,7 +5,7 @@ const apiClient = axios.create({
     import.meta.env.MODE === "development"
       ? "/backend"
       : "https://museum-curator-api.onrender.com/api",
-  timeout: 1000,
+  timeout: 5000,
 });
 
 export const checkIfArtworkIsFavourited = async (

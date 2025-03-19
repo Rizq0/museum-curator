@@ -4,8 +4,7 @@ const apiClient = axios.create({
   baseURL:
     import.meta.env.MODE === "development"
       ? "/cleveland"
-      : "https://cors-anywhere.herokuapp.com/https://openaccess-api.clevelandart.org/api", // This is a workaround for CORS issues, not to be used in full production. Only MVP / Demo. Backend proxy will be used for production.
-  timeout: 1000,
+      : "https://museum-curator-api.onrender.com/api/proxy/cleveland",
 });
 
 export const getClevelandArt = async (page: number, queryString: string) => {

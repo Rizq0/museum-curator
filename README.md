@@ -116,7 +116,7 @@ npm run dev
 
 The frontend will be available at `http://localhost:5173`.
 
-**Note:** The frontend is configured to use the hosted version of the backend by default. If you want to use your local backend, you'll need to update the API base URL in the frontend configuration.
+**Note:** The local development frontend is configured to `http://localhost:9090/api` backend by default (which needs to be running). In production, it uses the hosted version on Render `https://museum-curator-api.onrender.com/api`.
 
 ## Usage
 
@@ -161,9 +161,10 @@ Due to the 50-second delay on the Render backend, error messages may appear unti
 
 ## Challenges & Solutions
 
-- **Cold Start Delays**: The free tier on Render has cold start issues. Solution: I implemented loading states and error handling in the frontend.
+- **Cold Start Delays**: The free tier on Render has cold start issues. I implemented loading states and error handling in the frontend as a solution.
 - **Database Persistence**: Using SQLite with reseeding for the MVP phase. Future versions would implement a persistent database solution.
 - **Cleveland API**: There is a rate limit with the Cleveland API, meaning I had to use sequential processing for Cleveland API and parallel processing for Harvard API.
+- **API Proxy**: Due to the rate limits and cors errors with the Cleveland API, I decided to create a backend proxy to handle Cleveland API calls.
 - **Lack of Authentication**: The current MVP/Demo uses a hardcoded user ID "1" used throughout. Future versions would implement user authentication.
 
 ## Future Improvements

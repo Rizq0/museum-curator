@@ -541,6 +541,8 @@ describe("Cleveland Art Museum - Proxy", () => {
         expect(artwork).toHaveProperty("title");
       });
     });
+  });
+  describe("GET /api/proxy/cleveland/artworks/:id", () => {
     it("200: Returns an artwork by id.", async () => {
       const response = await request(app).get(
         "/api/proxy/cleveland/artworks/94979"
@@ -560,6 +562,46 @@ describe("Cleveland Art Museum - Proxy", () => {
     it("400: Returns an error if artwork id is not a number.", async () => {
       const response = await request(app).get(
         "/api/proxy/cleveland/artworks/invalid"
+      );
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+  });
+});
+
+describe("Harvard Art Museum - Proxy", () => {
+  describe("GET /api/proxy/harvard/object", () => {
+    it("200: Returns paginated artworks from the Harvard Art Museum API, size = 15, page = 1, q=``, sort = `id` & order = `asc`.", async () => {
+      const response = await request(app).get(
+        "/api/proxy/harvard/object?size=15&page=1&q=&sort=id&order=asc"
+      );
+      const body = response.body.records;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(15);
+      body.forEach((artwork) => {
+        expect(artwork).toHaveProperty("id");
+        expect(artwork).toHaveProperty("title");
+      });
+    });
+  });
+  describe("GET /api/proxy/harvard/object/:id", () => {
+    it("200: Returns an artwork by id.", async () => {
+      const response = await request(app).get("/api/proxy/harvard/object/1425");
+      const body = response.body;
+      expect(response.status).toBe(200);
+      expect(body).toHaveProperty("id", 1425);
+      expect(body).toHaveProperty("title", "The Virgin and Joseph at the Inn");
+    });
+    it("404: Returns an error if artwork id does not exist.", async () => {
+      const response = await request(app).get(
+        "/api/proxy/harvard/object/10000000"
+      );
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Not found" });
+    });
+    it("400: Returns an error if artwork id is not a number.", async () => {
+      const response = await request(app).get(
+        "/api/proxy/harvard/object/invalid"
       );
       expect(response.status).toBe(400);
       expect(response.body).toEqual({ message: "Invalid ID" });

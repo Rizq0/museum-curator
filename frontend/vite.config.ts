@@ -12,20 +12,9 @@ export default defineConfig(() => ({
   },
   server: {
     proxy: {
-      "/harvard": {
-        target: "https://api.harvardartmuseums.org",
+      "/api": {
+        target: "http://localhost:9090",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/harvard/, ""),
-      },
-      "/cleveland": {
-        target: "https://openaccess-api.clevelandart.org/api",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/cleveland/, ""),
-      },
-      "/backend": {
-        target: "http://localhost:9090/api",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/backend/, ""),
       },
     },
   },

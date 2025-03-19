@@ -3,7 +3,7 @@ import axios from "axios";
 const apiClient = axios.create({
   baseURL:
     import.meta.env.MODE === "development"
-      ? "/backend"
+      ? "/api"
       : "https://museum-curator-api.onrender.com/api",
   timeout: 5000,
 });

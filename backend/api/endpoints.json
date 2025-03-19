@@ -158,5 +158,16 @@
     "fetch_artwork": {
       "example": "GET /api/proxy/cleveland/artworks/94979"
     }
+  },
+  "GET /api/proxy/harvard": {
+    "description": "Proxy to Harvard Art Museums API",
+    "fetch_all_artworks": {
+      "example": "GET /api/proxy/harvard/artworks?size=15&page=1&sort=id&order=asc&q=dog",
+      "apikey": "Required"
+    },
+    "fetch_artwork": {
+      "example": "GET /api/proxy/harvard/artworks/1425",
+      "apikey": "Required"
+    }
   }
 }

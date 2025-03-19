@@ -67,6 +67,8 @@ Backend: [https://museum-curator-api.onrender.com/api](https://museum-curator-ap
 
 ### Backend Setup
 
+Request an Harvard Museum API key here: https://harvardartmuseums.org/collections/api
+
 1. Clone the repository
 
 ```bash
@@ -84,6 +86,7 @@ npm install
 
 ```
 PORT=9090
+HARVARD_API_KEY="YOUR API KEY HERE"
 ```
 
 4. Start the development server

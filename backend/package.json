@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
-    "dev": "nodemon listen.js",
+    "dev": "NODE_ENV=development node database/seed/seed-database.js && nodemon listen.js",
     "start": "NODE_ENV=production node database/seed/seed-database.js && node listen.js",
     "test-db": "node database/connection.js",
     "init-db": "node database/utils/init-db.js",

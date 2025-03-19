@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { getHarvardArt } from "../../api-calls/harvardart/harvardart-calls";
 import { getClevelandArt } from "../../api-calls/clevelandart/clevelandart-calls";
@@ -11,7 +11,9 @@ import { RetryError, HomepageNoResultsError } from "../error/Errors";
 export const Homepage = () => {
   let { page, gallery } = useParams();
   const [searchParams] = useSearchParams();
+  const [isSwitchingGallery, setIsSwitchingGallery] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [currentPage, setCurrentPage] = useState(() => Number(page) || 1);
   const [currentGallery, setCurrentGallery] = useState(() =>
@@ -72,6 +74,25 @@ export const Homepage = () => {
     setCurrentPage(1);
   };
 
+  useEffect(() => {
+    setIsSwitchingGallery(true);
+    if (currentGallery === "harvard") {
+      queryClient.resetQueries({ queryKey: ["clevelandArt"] });
+      if (!harvardAll) {
+        refetchHarvard().finally(() => setIsSwitchingGallery(false));
+      } else {
+        setIsSwitchingGallery(false);
+      }
+    } else if (currentGallery === "cleveland") {
+      queryClient.resetQueries({ queryKey: ["harvardArt"] });
+      if (!clevelandAll) {
+        refetchCleveland().finally(() => setIsSwitchingGallery(false));
+      } else {
+        setIsSwitchingGallery(false);
+      }
+    }
+  }, [currentGallery]);
+
   const handleRetry = () => {
     if (gallery === "harvard") {
       refetchHarvard();
@@ -126,22 +147,26 @@ export const Homepage = () => {
         />
       )}
 
-      {(harvardLoad || clevelandLoad) && (
+      {((gallery === "harvard" && harvardLoad) ||
+        (gallery === "cleveland" && clevelandLoad) ||
+        isSwitchingGallery) && (
         <div className="flex justify-center mt-4">
           <LoaderIcon className="animate-spin self-center size-8" />
         </div>
       )}
 
-      {(harvardError || clevelandError) && (
-        <RetryError
-          message="Error Fetching Data"
-          details={harvardError?.message || clevelandError?.message}
-          onRetry={handleRetry}
-          className="mt-16 mb-16"
-        />
-      )}
+      {!isSwitchingGallery &&
+        ((gallery === "harvard" && harvardError) ||
+          (gallery === "cleveland" && clevelandError)) && (
+          <RetryError
+            message="Error Fetching Data"
+            details={harvardError?.message || clevelandError?.message}
+            onRetry={handleRetry}
+            className="mt-16 mb-16"
+          />
+        )}
 
-      {gallery === "harvard" && harvardAll && (
+      {gallery === "harvard" && harvardAll && !isSwitchingGallery && (
         <div className="mt-4 mb-4">
           {harvardAll.data.records.length > 0 ? (
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -162,7 +187,7 @@ export const Homepage = () => {
         </div>
       )}
 
-      {gallery === "cleveland" && clevelandAll && (
+      {gallery === "cleveland" && clevelandAll && !isSwitchingGallery && (
         <div className="mt-4 mb-4">
           {clevelandAll.data.data.length > 0 ? (
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

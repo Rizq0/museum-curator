@@ -1,12 +1,20 @@
 # Museum Curator
 
+<p align="center">
+<img src="frontend/public/logo1.png" width="200" title="Login With Custom URL">
+</p>
+
 A web application for curating and exploring museum artwork collections.
 
 ## Project Overview
 
 Museum Curator allows users to browse artwork collections from various museums, create personal collections, and manage their favourite pieces. The application provides an intuitive interface for art enthusiasts to discover and organize artworks.
 
-## GIF TO BE ADDED HERE
+## Demo
+
+<p align="center">
+<img src="frontend/public/demo.gif" width="100%" alt="Museum Curator Demo">
+</p>
 
 ## Features
 
@@ -46,7 +54,7 @@ Museum Curator allows users to browse artwork collections from various museums, 
 
 ## Live Demo
 
-Frontend: [Museum Curator App](TBD)
+Frontend: [Museum Curator App](https://museum-curator-web.netlify.app/)
 
 Backend: [https://museum-curator-api.onrender.com/api](https://museum-curator-api.onrender.com/api)
 
@@ -147,7 +155,9 @@ The database does not persist across restarts, this is due to the project being 
 
 ### Frontend
 
-TBD
+The frontend is currently hosted on Netlify: [Museum Curator Web](https://museum-curator-web.netlify.app/)
+
+Due to the 50-second delay on the Render backend, error messages may appear until the backend server is running.
 
 ## Challenges & Solutions
 
@@ -166,7 +176,7 @@ TBD
 
 ## Contributors
 
-- Joe B ([@Rizq0](https://github.com/Rizq0))
+- Joe B - [GitHub](https://github.com/Rizq0) | [LinkedIn](https://www.linkedin.com/in/joe-brown0/) | [Portfolio](https://joedev.co.uk/)
 
 ## License
 

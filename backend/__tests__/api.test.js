@@ -526,3 +526,43 @@ describe("API Endpoints", () => {
     });
   });
 });
+
+describe("Cleveland Art Museum - Proxy", () => {
+  describe("GET /api/proxy/cleveland/artworks", () => {
+    it("200: Returns paginated artworks from the Cleveland Art Museum API, limit value = 15, skip value = (page - 1) * limit, q=``.", async () => {
+      const response = await request(app).get(
+        "/api/proxy/cleveland/artworks?skip=0&limit=15&q="
+      );
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body.length).toBe(15);
+      body.forEach((artwork) => {
+        expect(artwork).toHaveProperty("id");
+        expect(artwork).toHaveProperty("title");
+      });
+    });
+    it("200: Returns an artwork by id.", async () => {
+      const response = await request(app).get(
+        "/api/proxy/cleveland/artworks/94979"
+      );
+      const body = response.body.data;
+      expect(response.status).toBe(200);
+      expect(body).toHaveProperty("id", 94979);
+      expect(body).toHaveProperty("title", "Nathaniel Hurd");
+    });
+    it("404: Returns an error if artwork id does not exist.", async () => {
+      const response = await request(app).get(
+        "/api/proxy/cleveland/artworks/100000"
+      );
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({ message: "Artwork not found" });
+    });
+    it("400: Returns an error if artwork id is not a number.", async () => {
+      const response = await request(app).get(
+        "/api/proxy/cleveland/artworks/invalid"
+      );
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ message: "Invalid ID" });
+    });
+  });
+});

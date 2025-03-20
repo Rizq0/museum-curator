@@ -60,10 +60,20 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
               aria-label="Home"
             >
-              <IconHome height={48} width={48} onClick={handleHome} />
+              <IconHome
+                height={48}
+                width={48}
+                onClick={handleHome}
+                title="Home"
+              />
             </div>
             <div className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer">
-              <IconHeart height={48} width={48} onClick={handleFavourites} />
+              <IconHeart
+                height={48}
+                width={48}
+                onClick={handleFavourites}
+                title="Collections"
+              />
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -73,18 +83,21 @@ export const Layout = ({ children }: { children: ReactNode }) => {
               onCheckedChange={toggleTheme}
               className="cursor-pointer bg-dbg-purple dark:bg-dheadline-white"
               aria-label="Toggle Dark Mode"
+              title="Toggle Dark Mode"
             />
             {!darkMode ? (
               <IconSunHigh
                 height={35}
                 width={35}
                 className="text-dbg-purple dark:text-dheadline-white"
+                title="Toggle Dark Mode"
               />
             ) : (
               <IconMoonStars
                 height={35}
                 width={35}
                 className="text-dbg-purple dark:text-dheadline-white"
+                title="Toggle Dark Mode"
               />
             )}
           </div>
@@ -109,7 +122,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                 rel="noopener noreferrer"
                 className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
               >
-                <IconBrandGithub height={48} width={48} />
+                <IconBrandGithub height={48} width={48} title="GitHub" />
               </a>
               <a
                 href="https://www.linkedin.com/in/joe-brown0/"
@@ -117,7 +130,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                 rel="noopener noreferrer"
                 className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
               >
-                <IconBrandLinkedin height={48} width={48} />
+                <IconBrandLinkedin height={48} width={48} title="LinkedIn" />
               </a>
               <a
                 href="https://joedev.co.uk/"
@@ -125,7 +138,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                 rel="noopener noreferrer"
                 className="hover:text-dbuttonbg-pink text-dbg-purple dark:text-dheadline-white cursor-pointer"
               >
-                <IconListDetails height={48} width={48} />
+                <IconListDetails height={48} width={48} title="Portfolio" />
               </a>
             </div>
           </div>

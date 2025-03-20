@@ -167,7 +167,7 @@ Due to the 50-second delay on the Render backend, error messages may appear unti
 - **Cold Start Delays**: The free tier on Render has cold start issues. I implemented loading states and error handling in the frontend as a solution.
 - **Database Persistence**: Using SQLite with reseeding for the MVP phase. Future versions would implement a persistent database solution.
 - **Cleveland API**: There is a rate limit with the Cleveland API, meaning I had to use sequential processing for Cleveland API and parallel processing for Harvard API.
-- **API Proxy**: Due to the rate limits and cors errors with the Cleveland API, I decided to create a backend proxy to handle Cleveland API calls.
+- **API Proxy**: Due to the rate limits and cors errors with the Cleveland API, I decided to create a backend proxy to handle all external API calls.
 - **Lack of Authentication**: The current MVP/Demo uses a hardcoded user ID "1" used throughout. Future versions would implement user authentication.
 
 ## Future Improvements

@@ -1,6 +1,6 @@
 name: Build and Push Docker Images
 
-on: push # Trigger on any push to any branch
+on: push
 
 jobs:
   build-and-push:
@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Lowercase repository owner
+        id: lowercase-repo-owner
+        run: echo "REPO_OWNER=${{ github.repository_owner }}" >> "${GITHUB_ENV}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -28,11 +32,11 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ghcr.io/${{ github.repository }}/backend:latest
+          tags: ghcr.io/${{ env.REPO_OWNER }}/museum-curator/backend:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
           push: true
-          tags: ghcr.io/${{ github.repository }}/frontend:latest
+          tags: ghcr.io/${{ env.REPO_OWNER }}/museum-curator/frontend:latest

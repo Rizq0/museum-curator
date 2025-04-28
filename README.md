@@ -30,6 +30,11 @@ Museum Curator allows users to browse artwork collections from various museums, 
 - JavaScript (Backend)
 - TypeScript (Frontend)
 
+### Containerization & Continuous Integration and Deployment
+
+- Docker
+- GitHub Actions
+
 ### Frontend
 
 - Vite/React
@@ -120,6 +125,38 @@ npm run dev
 The frontend will be available at `http://localhost:5173`.
 
 **Note:** The local development frontend is configured to `http://localhost:9090/api` backend by default (which needs to be running). In production, it uses the hosted version on Render `https://museum-curator-api.onrender.com/api`.
+
+## Docker Setup
+
+Request an Harvard Museum API key here: https://harvardartmuseums.org/collections/api
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/museum-curator.git
+cd museum-curator
+```
+
+2. Create a `.env` file in the backend directory with the following content:
+
+```
+PORT=9090
+HARVARD_API_KEY="YOUR API KEY HERE"
+```
+
+3. Build and run the backend and frontend using Docker
+
+```
+docker-compose up --build
+```
+
+This command will:
+
+- Build the Docker images for both the backend and frontend.
+- Start the backend on port 9090 and the frontend on port 5173.
+
+Once the containers are up and running, the application will be accessible at:
+<br> Backend: `http://localhost:9090/api` <br> Frontend: `http://localhost:5173/cleveland/1`
 
 ## Usage
 

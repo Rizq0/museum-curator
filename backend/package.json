@@ -6,9 +6,11 @@
     "test": "NODE_ENV=test jest",
     "dev": "NODE_ENV=development node database/seed/seed-database.js && nodemon listen.js",
     "start": "NODE_ENV=production node database/seed/seed-database.js && node listen.js",
+    "dev:no-seed": "NODE_ENV=development nodemon listen.js",
     "test-db": "node database/connection.js",
     "init-db": "node database/utils/init-db.js",
     "seed:test": "NODE_ENV=test node database/seed/seed-database.js",
+    "seed:dev": "NODE_ENV=development node database/seed/seed-database.js",
     "seed:prod": "NODE_ENV=production node database/seed/seed-database.js"
   },
   "keywords": [],

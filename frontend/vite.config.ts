@@ -2,6 +2,8 @@ import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+const targetUrl = process.env.VITE_TARGET_URL || "http://localhost:9090";
+
 // https://vite.dev/config/
 export default defineConfig(() => ({
   plugins: [react()],
@@ -13,7 +15,7 @@ export default defineConfig(() => ({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:9090",
+        target: targetUrl,
         changeOrigin: true,
       },
     },
